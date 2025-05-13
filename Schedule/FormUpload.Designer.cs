@@ -30,13 +30,13 @@
         {
             label1 = new Label();
             buttonUpload = new Button();
-            dataGridView1 = new DataGridView();
             panel1 = new Panel();
             panel2 = new Panel();
+            dataGridView1 = new DataGridView();
             openFileDialog1 = new OpenFileDialog();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -58,14 +58,6 @@
             buttonUpload.UseVisualStyleBackColor = true;
             buttonUpload.Click += ButtonUpload_Click;
             // 
-            // dataGridView1
-            // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(12, 6);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(826, 451);
-            dataGridView1.TabIndex = 2;
-            // 
             // panel1
             // 
             panel1.Controls.Add(buttonUpload);
@@ -85,9 +77,16 @@
             panel2.Size = new Size(850, 469);
             panel2.TabIndex = 4;
             // 
-            // openFileDialog1
+            // dataGridView1
             // 
-            openFileDialog1.FileName = "openFileDialog1";
+            dataGridView1.BackgroundColor = Color.White;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(12, 6);
+            dataGridView1.MultiSelect = false;
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridView1.Size = new Size(826, 451);
+            dataGridView1.TabIndex = 0;
             // 
             // FormUpload
             // 
@@ -101,10 +100,10 @@
             Margin = new Padding(5);
             Name = "FormUpload";
             Text = "Загрузка файла";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
@@ -112,9 +111,9 @@
 
         private Label label1;
         private Button buttonUpload;
-        private DataGridView dataGridView1;
         private Panel panel1;
         private Panel panel2;
         private OpenFileDialog openFileDialog1;
+        private DataGridView dataGridView1;
     }
 }

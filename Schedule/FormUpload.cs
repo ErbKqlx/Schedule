@@ -1,6 +1,4 @@
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using Microsoft.Office.Interop.Excel;
 
 namespace Schedule
 {
@@ -9,42 +7,77 @@ namespace Schedule
         public FormUpload()
         {
             InitializeComponent();
+
         }
 
         private void ButtonUpload_Click(object sender, EventArgs e)
         {
-            string file = ""; //variable for the Excel File Location
-            DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
-
-            if (result == DialogResult.OK) // Check if Result == "OK".
+            string fname = "";
+            OpenFileDialog fdlg = new OpenFileDialog();
+            fdlg.Title = "Excel File Dialog";
+            fdlg.InitialDirectory = @"c:\";
+            fdlg.Filter = "All files (*.*)|*.*|All files (*.*)|*.*";
+            fdlg.FilterIndex = 2;
+            fdlg.RestoreDirectory = true;
+            if (fdlg.ShowDialog() == DialogResult.OK)
             {
-                file = openFileDialog1.FileName; //get the filename with the location of the file
-                try
-                {
-                    //Create Object for Microsoft.Office.Interop.Excel that will be use to read excel file
-                    Microsoft.Office.Interop.Excel.Application excelApp =
-                        new Microsoft.Office.Interop.Excel.Application();
-                    Microsoft.Office.Interop.Excel.Workbook excelWorkbook = excelApp.Workbooks.Open(file);
-                    Microsoft.Office.Interop.Excel._Worksheet excelWorksheet = (_Worksheet)excelWorkbook.Sheets[1];
-                    Microsoft.Office.Interop.Excel.Range excelRange = excelWorksheet.UsedRange;
+                fname = fdlg.FileName;
+            }
 
-                    dataGridView1.DataSource = ExcelFileReader.read(excelRange);
-                    //close and clean excel process
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-                    Marshal.ReleaseComObject(excelRange);
-                    Marshal.ReleaseComObject(excelWorksheet);
-                    //quit apps
-                    excelWorkbook.Close();
-                    Marshal.ReleaseComObject(excelWorkbook);
-                    excelApp.Quit();
-                    Marshal.ReleaseComObject(excelApp);
-                }
-                catch (Exception ex)
+            Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
+            Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fname);
+            Microsoft.Office.Interop.Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
+            Microsoft.Office.Interop.Excel.Range xlRange = xlWorksheet.UsedRange;
+
+            int rowCount = xlRange.Rows.Count;
+            int colCount = xlRange.Columns.Count;
+
+            // dt.Column = colCount;  
+            dataGridView1.ColumnCount = colCount;
+            dataGridView1.RowCount = rowCount;
+
+            for (int i = 1; i <= rowCount; i++)
+            {
+                for (int j = 1; j <= colCount; j++)
                 {
-                    MessageBox.Show(ex.Message);
+
+
+                    //write the value to the Grid  
+
+
+                    if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j].Value2 != null)
+                    {
+                        dataGridView1.Rows[i - 1].Cells[j - 1].Value = xlRange.Cells[i, j].Value2.ToString();
+                    }
+                    // Console.Write(xlRange.Cells[i, j].Value2.ToString() + "\t");  
+
+                    //add useful things here!     
                 }
             }
+
+            //cleanup  
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            //rule of thumb for releasing com objects:  
+            //  never use two dots, all COM objects must be referenced and released individually  
+            //  ex: [somthing].[something].[something] is bad  
+
+            //release com objects to fully kill excel process from running in the background  
+            Marshal.ReleaseComObject(xlRange);
+            Marshal.ReleaseComObject(xlWorksheet);
+
+            //close and release  
+            xlWorkbook.Close();
+            Marshal.ReleaseComObject(xlWorkbook);
+
+            //quit and release  
+            xlApp.Quit();
+            Marshal.ReleaseComObject(xlApp);
+        }
+
+        private void ReadExcel(string sFile)
+        {
             
         }
     }
