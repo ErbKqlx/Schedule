@@ -1,8 +1,8 @@
-using System.Runtime.InteropServices;
+using Syncfusion.XlsIO;
 
 namespace Schedule
 {
-    public partial class FormUpload : System.Windows.Forms.Form
+    public partial class FormUpload : Form
     {
         public FormUpload()
         {
@@ -12,73 +12,40 @@ namespace Schedule
 
         private void ButtonUpload_Click(object sender, EventArgs e)
         {
-            string fname = "";
-            OpenFileDialog fdlg = new OpenFileDialog();
-            fdlg.Title = "Excel File Dialog";
-            fdlg.InitialDirectory = @"c:\";
-            fdlg.Filter = "All files (*.*)|*.*|All files (*.*)|*.*";
-            fdlg.FilterIndex = 2;
-            fdlg.RestoreDirectory = true;
-            if (fdlg.ShowDialog() == DialogResult.OK)
+            string filename = "";
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Title = "Загрузка файла";
+            dialog.InitialDirectory = @"c:\";
+            dialog.Filter = "All files (*.*)|*.*";
+            dialog.FilterIndex = 2;
+            dialog.RestoreDirectory = true;
+
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
-                fname = fdlg.FileName;
+                filename = dialog.FileName;
             }
 
-            Microsoft.Office.Interop.Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
-            Microsoft.Office.Interop.Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(fname);
-            Microsoft.Office.Interop.Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
-            Microsoft.Office.Interop.Excel.Range xlRange = xlWorksheet.UsedRange;
-
-            int rowCount = xlRange.Rows.Count;
-            int colCount = xlRange.Columns.Count;
-
-            // dt.Column = colCount;  
-            dataGridView1.ColumnCount = colCount;
-            dataGridView1.RowCount = rowCount;
-
-            for (int i = 1; i <= rowCount; i++)
+            using (ExcelEngine excelEngine = new ExcelEngine())
             {
-                for (int j = 1; j <= colCount; j++)
-                {
+                //Запускаем Excel
+                IApplication application = excelEngine.Excel;
 
+                //Устанавливаем версию по умолчанию
+                application.DefaultVersion = ExcelVersion.Xlsx;
 
-                    //write the value to the Grid  
+                //Открываем файл
+                IWorkbook workbook = application.Workbooks.Open(filename);
 
+                //Первый лист
+                IWorksheet worksheet = workbook.Worksheets[0];
 
-                    if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j].Value2 != null)
-                    {
-                        dataGridView1.Rows[i - 1].Cells[j - 1].Value = xlRange.Cells[i, j].Value2.ToString();
-                    }
-                    // Console.Write(xlRange.Cells[i, j].Value2.ToString() + "\t");  
+                //Чтение ячейки
+                var value = worksheet.Range["B2"].Value;
 
-                    //add useful things here!     
-                }
+                MessageBox.Show(value);
             }
-
-            //cleanup  
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
-            //rule of thumb for releasing com objects:  
-            //  never use two dots, all COM objects must be referenced and released individually  
-            //  ex: [somthing].[something].[something] is bad  
-
-            //release com objects to fully kill excel process from running in the background  
-            Marshal.ReleaseComObject(xlRange);
-            Marshal.ReleaseComObject(xlWorksheet);
-
-            //close and release  
-            xlWorkbook.Close();
-            Marshal.ReleaseComObject(xlWorkbook);
-
-            //quit and release  
-            xlApp.Quit();
-            Marshal.ReleaseComObject(xlApp);
         }
 
-        private void ReadExcel(string sFile)
-        {
-            
-        }
+
     }
 }
