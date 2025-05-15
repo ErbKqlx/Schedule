@@ -29,40 +29,33 @@
         private void InitializeComponent()
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            label1 = new Label();
             buttonUpload = new Button();
             panel1 = new Panel();
             panel2 = new Panel();
             dataGridView1 = new DataGridView();
             openFileDialog1 = new OpenFileDialog();
+            buttonSave = new Button();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(25, 21);
-            label1.Name = "label1";
-            label1.Size = new Size(149, 25);
-            label1.TabIndex = 0;
-            label1.Text = "Загрузить файл:";
-            // 
             // buttonUpload
             // 
-            buttonUpload.Location = new Point(180, 21);
+            buttonUpload.BackColor = Color.White;
+            buttonUpload.FlatStyle = FlatStyle.Flat;
+            buttonUpload.Location = new Point(3, 12);
             buttonUpload.Name = "buttonUpload";
-            buttonUpload.Size = new Size(105, 34);
+            buttonUpload.Size = new Size(167, 40);
             buttonUpload.TabIndex = 1;
-            buttonUpload.Text = "Загрузить";
-            buttonUpload.UseVisualStyleBackColor = true;
+            buttonUpload.Text = "Загрузить файл";
+            buttonUpload.UseVisualStyleBackColor = false;
             buttonUpload.Click += ButtonUpload_Click;
             // 
             // panel1
             // 
+            panel1.Controls.Add(buttonSave);
             panel1.Controls.Add(buttonUpload);
-            panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(10, 10);
             panel1.Name = "panel1";
@@ -100,6 +93,18 @@
             dataGridView1.Size = new Size(830, 449);
             dataGridView1.TabIndex = 0;
             // 
+            // buttonSave
+            // 
+            buttonSave.BackColor = Color.White;
+            buttonSave.FlatStyle = FlatStyle.Flat;
+            buttonSave.Location = new Point(176, 12);
+            buttonSave.Name = "buttonSave";
+            buttonSave.Size = new Size(167, 40);
+            buttonSave.TabIndex = 2;
+            buttonSave.Text = "Сохранить файл";
+            buttonSave.UseVisualStyleBackColor = false;
+            buttonSave.Click += ButtonSave_Click;
+            // 
             // FormUpload
             // 
             AutoScaleDimensions = new SizeF(11F, 25F);
@@ -114,7 +119,6 @@
             Padding = new Padding(10);
             Text = "Загрузка файла";
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
@@ -122,12 +126,11 @@
         }
 
         #endregion
-
-        private Label label1;
         private Button buttonUpload;
         private Panel panel1;
         private Panel panel2;
         private OpenFileDialog openFileDialog1;
         private DataGridView dataGridView1;
+        private Button buttonSave;
     }
 }

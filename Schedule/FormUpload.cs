@@ -4,6 +4,10 @@ namespace Schedule
 {
     public partial class FormUpload : Form
     {
+        private IApplication _application;
+        private IWorkbook _workbook;
+        private IWorksheet _worksheet;
+
         public FormUpload()
         {
             InitializeComponent();
@@ -28,24 +32,27 @@ namespace Schedule
             using (ExcelEngine excelEngine = new ExcelEngine())
             {
                 //Запускаем Excel
-                IApplication application = excelEngine.Excel;
+                _application = excelEngine.Excel;
 
                 //Устанавливаем версию по умолчанию
-                application.DefaultVersion = ExcelVersion.Xlsx;
+                _application.DefaultVersion = ExcelVersion.Xlsx;
 
                 //Открываем файл
-                IWorkbook workbook = application.Workbooks.Open(filename);
+                _workbook = _application.Workbooks.Open(filename);
 
                 //Первый лист
-                IWorksheet worksheet = workbook.Worksheets[0];
+                _worksheet = _workbook.Worksheets[0];
 
                 //Чтение ячейки
-                var value = worksheet.Range["B2"].Value;
+                var value = _worksheet.Range["B2"].Value;
 
-                MessageBox.Show(value);
+
             }
         }
 
-
+        private void ButtonSave_Click(object sender, EventArgs e)
+        {
+            _workbook?.SaveAs("Расписание.xlsx");
+        }
     }
 }
