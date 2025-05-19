@@ -28,13 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             buttonUpload = new Button();
             panel1 = new Panel();
-            panel2 = new Panel();
-            dataGridView1 = new DataGridView();
-            openFileDialog1 = new OpenFileDialog();
             buttonSave = new Button();
+            panel2 = new Panel();
+            openFileDialog1 = new OpenFileDialog();
+            dataGridView1 = new DataGridView();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -62,6 +61,18 @@
             panel1.Size = new Size(830, 67);
             panel1.TabIndex = 3;
             // 
+            // buttonSave
+            // 
+            buttonSave.BackColor = Color.White;
+            buttonSave.FlatStyle = FlatStyle.Flat;
+            buttonSave.Location = new Point(176, 12);
+            buttonSave.Name = "buttonSave";
+            buttonSave.Size = new Size(167, 40);
+            buttonSave.TabIndex = 2;
+            buttonSave.Text = "Сохранить файл";
+            buttonSave.UseVisualStyleBackColor = false;
+            buttonSave.Click += ButtonSave_Click;
+            // 
             // panel2
             // 
             panel2.AutoSize = true;
@@ -75,35 +86,11 @@
             // 
             // dataGridView1
             // 
-            dataGridView1.BackgroundColor = Color.White;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Window;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
-            dataGridView1.Dock = DockStyle.Fill;
-            dataGridView1.Location = new Point(0, 0);
-            dataGridView1.MultiSelect = false;
+            dataGridView1.Location = new Point(3, 6);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.ReadOnly = true;
-            dataGridView1.Size = new Size(830, 449);
+            dataGridView1.Size = new Size(824, 440);
             dataGridView1.TabIndex = 0;
-            // 
-            // buttonSave
-            // 
-            buttonSave.BackColor = Color.White;
-            buttonSave.FlatStyle = FlatStyle.Flat;
-            buttonSave.Location = new Point(176, 12);
-            buttonSave.Name = "buttonSave";
-            buttonSave.Size = new Size(167, 40);
-            buttonSave.TabIndex = 2;
-            buttonSave.Text = "Сохранить файл";
-            buttonSave.UseVisualStyleBackColor = false;
-            buttonSave.Click += ButtonSave_Click;
             // 
             // FormUpload
             // 
@@ -130,7 +117,7 @@
         private Panel panel1;
         private Panel panel2;
         private OpenFileDialog openFileDialog1;
-        private DataGridView dataGridView1;
         private Button buttonSave;
+        private DataGridView dataGridView1;
     }
 }
