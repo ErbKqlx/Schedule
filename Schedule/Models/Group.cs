@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Schedule;
+namespace Schedule_project.Models;
 
 public partial class Group
 {
@@ -11,15 +11,13 @@ public partial class Group
 
     public short Course { get; set; }
 
-    public DateOnly DateOfAdmission { get; set; }
-
-    public DateOnly DateOfGraduation { get; set; }
-
     public short IdTeacher { get; set; }
 
-    public short IdCurriculum { get; set; }
+    public short YearOfAdmission { get; set; }
 
-    public virtual Curriculum IdCurriculumNavigation { get; set; } = null!;
+    public short YearOfGraduation { get; set; }
 
     public virtual Teacher IdTeacherNavigation { get; set; } = null!;
+
+    public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
 }

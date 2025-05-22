@@ -1,4 +1,4 @@
-namespace Schedule
+namespace Schedule_project
 {
     internal static class Program
     {

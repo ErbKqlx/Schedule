@@ -1,16 +1,14 @@
 using System.Diagnostics;
 using System.Xml;
 using System.Xml.Schema;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Syncfusion.XlsIO;
+using Syncfusion.XlsIO.Implementation.Shapes;
 
-namespace Schedule
+namespace Schedule_project
 {
     public partial class FormUpload : Form
     {
-        private IApplication _application;
-        private IWorkbook _workbook;
-        private IWorksheet _worksheet;
-
         public FormUpload()
         {
             InitializeComponent();
@@ -33,16 +31,18 @@ namespace Schedule
 
             using (ExcelEngine excelEngine = new ExcelEngine())
             {
+                
                 //Запускаем Excel
-                _application = excelEngine.Excel;
+                IApplication application = excelEngine.Excel;
 
                 //Устанавливаем версию по умолчанию
-                _application.DefaultVersion = ExcelVersion.Xlsx;
+                application.DefaultVersion = ExcelVersion.Xlsx;
+                IWorkbook workbook;
 
                 //Открываем файл
                 try
                 {
-                    _workbook = _application.Workbooks.Open(filename);
+                    workbook = application.Workbooks.Open(filename);
                 }
                 catch (IOException exception)
                 {
@@ -64,33 +64,22 @@ namespace Schedule
                     ExceptionHandle("Формат файла не поддерживается");
                     return;
                 }
-                
 
-                //Первый лист
-                _worksheet = _workbook.Worksheets[0];
-
-                //Чтение ячейки
-                var value = _worksheet.Range["B4"].Value;
-
-                //var range = _worksheet.UsedRange;
-
-                MessageBox.Show(value);
+                var formSchedule = new FormSchedule(application, workbook);
+                this.Owner = formSchedule;
+                this.Hide();
+                formSchedule.Show();
             }
-        }
-
-        private void ButtonSave_Click(object sender, EventArgs e)
-        {
-            _workbook?.SaveAs("Расписание.xlsx");
         }
 
         private void ExceptionHandle(string errorText)
         {
             MessageBox.Show
             (
-            errorText,
-            "Ошибка",
-            MessageBoxButtons.OK,
-            MessageBoxIcon.Error
+                errorText,
+                "Ошибка",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
             );
         }
     }
