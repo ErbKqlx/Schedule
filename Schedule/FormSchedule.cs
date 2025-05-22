@@ -34,18 +34,20 @@ namespace Schedule_project
             _db = new();
             _db.Schedules.Load();
 
+            date1.Text = _worksheet.Name;
+
             var schedules = _db.Schedules.Local.ToList();
             foreach (var schedule in schedules)
             {
-                label1.Text = _db.Groups.FirstOrDefault(v => v.Id == schedule.IdGroup).Name;
-                label2.Text = _db.Cabinets.FirstOrDefault(v => v.Id == schedule.IdCabinet).Number.ToString();
-                label3.Text = schedule.Number.ToString();
+                labelGroup.Text = _db.Groups.FirstOrDefault(v => v.Id == schedule.IdGroup).Name;
+                labelCabinet.Text = _db.Cabinets.FirstOrDefault(v => v.Id == schedule.IdCabinet).Number.ToString();
+                //label3.Text = schedule.Number.ToString();
                 var disciplinesTeacher = _db.DisciplinesTeachers.FirstOrDefault(v => v.Id == schedule.IdDisciplineTeacher);
                 var discipline = _db.Disciplines.FirstOrDefault(v => v.Id == disciplinesTeacher.IdDiscipline);
-                label4.Text = $"{discipline.Code} {discipline.Name}";
+                labelDiscipline.Text = $"{discipline.Code} {discipline.Name}";
                 var teacher = _db.Teachers.FirstOrDefault(v => v.Id == disciplinesTeacher.IdTeacher);
-                label5.Text = $"{teacher.Surname} {teacher.Name} {teacher.Patronymic}";
-                label6.Text = schedule.Date.ToString();
+                labelTeacher.Text = $"{teacher.Surname} {teacher.Name} {teacher.Patronymic}";
+                //label6.Text = schedule.Date.ToString();
             } 
         }
 

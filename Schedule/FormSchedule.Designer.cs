@@ -28,93 +28,176 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            label4 = new Label();
-            label5 = new Label();
-            label6 = new Label();
+            labelGroup = new Label();
+            labelCabinet = new Label();
+            labelTeacher = new Label();
+            labelDiscipline = new Label();
+            flowLayoutPanel1 = new FlowLayoutPanel();
+            panel1 = new Panel();
+            buttonNext = new Button();
+            buttonPrevious = new Button();
+            date1 = new Label();
+            flowLayoutPanel2 = new FlowLayoutPanel();
+            panel2 = new Panel();
+            flowLayoutPanel1.SuspendLayout();
+            panel1.SuspendLayout();
+            flowLayoutPanel2.SuspendLayout();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
-            // label1
+            // labelGroup
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(22, 38);
-            label1.Name = "label1";
-            label1.Size = new Size(38, 15);
-            label1.TabIndex = 0;
-            label1.Text = "label1";
+            labelGroup.AutoSize = true;
+            labelGroup.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            labelGroup.Location = new Point(498, 9);
+            labelGroup.Margin = new Padding(5, 0, 5, 0);
+            labelGroup.Name = "labelGroup";
+            labelGroup.Size = new Size(89, 37);
+            labelGroup.TabIndex = 0;
+            labelGroup.Text = "group";
             // 
-            // label2
+            // labelCabinet
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(26, 68);
-            label2.Name = "label2";
-            label2.Size = new Size(38, 15);
-            label2.TabIndex = 1;
-            label2.Text = "label2";
+            labelCabinet.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            labelCabinet.Location = new Point(113, 166);
+            labelCabinet.Margin = new Padding(5, 0, 5, 0);
+            labelCabinet.Name = "labelCabinet";
+            labelCabinet.RightToLeft = RightToLeft.Yes;
+            labelCabinet.Size = new Size(74, 25);
+            labelCabinet.TabIndex = 1;
+            labelCabinet.Text = "cabinet";
             // 
-            // label3
+            // labelTeacher
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(32, 100);
-            label3.Name = "label3";
-            label3.Size = new Size(38, 15);
-            label3.TabIndex = 2;
-            label3.Text = "label3";
+            labelTeacher.AutoSize = true;
+            labelTeacher.Dock = DockStyle.Top;
+            labelTeacher.Location = new Point(0, 25);
+            labelTeacher.Margin = new Padding(5, 0, 5, 0);
+            labelTeacher.MaximumSize = new Size(193, 0);
+            labelTeacher.Name = "labelTeacher";
+            labelTeacher.Size = new Size(75, 25);
+            labelTeacher.TabIndex = 3;
+            labelTeacher.Text = "teacher";
             // 
-            // label4
+            // labelDiscipline
             // 
-            label4.AutoSize = true;
-            label4.Location = new Point(34, 135);
-            label4.Name = "label4";
-            label4.Size = new Size(38, 15);
-            label4.TabIndex = 3;
-            label4.Text = "label4";
+            labelDiscipline.AutoSize = true;
+            labelDiscipline.Dock = DockStyle.Top;
+            labelDiscipline.Location = new Point(0, 0);
+            labelDiscipline.Margin = new Padding(5, 0, 5, 0);
+            labelDiscipline.MaximumSize = new Size(193, 0);
+            labelDiscipline.Name = "labelDiscipline";
+            labelDiscipline.Size = new Size(92, 25);
+            labelDiscipline.TabIndex = 4;
+            labelDiscipline.Text = "discipline";
             // 
-            // label5
+            // flowLayoutPanel1
             // 
-            label5.AutoSize = true;
-            label5.Location = new Point(39, 169);
-            label5.Name = "label5";
-            label5.Size = new Size(38, 15);
-            label5.TabIndex = 4;
-            label5.Text = "label5";
+            flowLayoutPanel1.Controls.Add(panel1);
+            flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
+            flowLayoutPanel1.Location = new Point(5, 35);
+            flowLayoutPanel1.Margin = new Padding(5);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(201, 475);
+            flowLayoutPanel1.TabIndex = 6;
             // 
-            // label6
+            // panel1
             // 
-            label6.AutoSize = true;
-            label6.Location = new Point(43, 206);
-            label6.Name = "label6";
-            label6.Size = new Size(38, 15);
-            label6.TabIndex = 5;
-            label6.Text = "label6";
+            panel1.BackColor = Color.WhiteSmoke;
+            panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(labelCabinet);
+            panel1.Controls.Add(labelTeacher);
+            panel1.Controls.Add(labelDiscipline);
+            panel1.Location = new Point(3, 3);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(195, 199);
+            panel1.TabIndex = 0;
+            // 
+            // buttonNext
+            // 
+            buttonNext.FlatStyle = FlatStyle.Flat;
+            buttonNext.Location = new Point(640, 12);
+            buttonNext.Name = "buttonNext";
+            buttonNext.Size = new Size(35, 34);
+            buttonNext.TabIndex = 7;
+            buttonNext.Text = ">";
+            buttonNext.UseVisualStyleBackColor = true;
+            // 
+            // buttonPrevious
+            // 
+            buttonPrevious.FlatStyle = FlatStyle.Flat;
+            buttonPrevious.Location = new Point(411, 12);
+            buttonPrevious.Name = "buttonPrevious";
+            buttonPrevious.Size = new Size(35, 34);
+            buttonPrevious.TabIndex = 8;
+            buttonPrevious.Text = "<";
+            buttonPrevious.UseVisualStyleBackColor = true;
+            // 
+            // date1
+            // 
+            date1.AutoSize = true;
+            date1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            date1.ImageAlign = ContentAlignment.TopLeft;
+            date1.Location = new Point(8, 5);
+            date1.Name = "date1";
+            date1.Size = new Size(62, 25);
+            date1.TabIndex = 9;
+            date1.Text = "date1";
+            date1.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // flowLayoutPanel2
+            // 
+            flowLayoutPanel2.Controls.Add(panel2);
+            flowLayoutPanel2.Location = new Point(12, 52);
+            flowLayoutPanel2.Name = "flowLayoutPanel2";
+            flowLayoutPanel2.Size = new Size(1076, 527);
+            flowLayoutPanel2.TabIndex = 10;
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(flowLayoutPanel1);
+            panel2.Controls.Add(date1);
+            panel2.Location = new Point(3, 3);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(210, 515);
+            panel2.TabIndex = 11;
             // 
             // FormSchedule
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(11F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(800, 450);
-            Controls.Add(label6);
-            Controls.Add(label5);
-            Controls.Add(label4);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(label1);
+            ClientSize = new Size(1100, 591);
+            Controls.Add(flowLayoutPanel2);
+            Controls.Add(buttonPrevious);
+            Controls.Add(buttonNext);
+            Controls.Add(labelGroup);
+            Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            Margin = new Padding(5);
             Name = "FormSchedule";
             Text = "Расписание";
+            flowLayoutPanel1.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            flowLayoutPanel2.ResumeLayout(false);
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Label label1;
-        private Label label2;
-        private Label label3;
-        private Label label4;
-        private Label label5;
-        private Label label6;
+        private Label labelGroup;
+        private Label labelCabinet;
+        private Label labelTeacher;
+        private Label labelDiscipline;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private Panel panel1;
+        private Button buttonNext;
+        private Button buttonPrevious;
+        private Label date1;
+        private FlowLayoutPanel flowLayoutPanel2;
+        private Panel panel2;
     }
 }
