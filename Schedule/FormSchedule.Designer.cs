@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             labelGroup = new Label();
             labelCabinet = new Label();
             labelTeacher = new Label();
@@ -39,6 +40,7 @@
             date1 = new Label();
             flowLayoutPanel2 = new FlowLayoutPanel();
             panel2 = new Panel();
+            contextMenuStrip1 = new ContextMenuStrip(components);
             flowLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
@@ -58,24 +60,26 @@
             // 
             // labelCabinet
             // 
-            labelCabinet.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            labelCabinet.Location = new Point(113, 166);
+            labelCabinet.Dock = DockStyle.Bottom;
+            labelCabinet.Location = new Point(0, 172);
             labelCabinet.Margin = new Padding(5, 0, 5, 0);
             labelCabinet.Name = "labelCabinet";
-            labelCabinet.RightToLeft = RightToLeft.Yes;
-            labelCabinet.Size = new Size(74, 25);
+            labelCabinet.RightToLeft = RightToLeft.No;
+            labelCabinet.Size = new Size(193, 25);
             labelCabinet.TabIndex = 1;
             labelCabinet.Text = "cabinet";
+            labelCabinet.TextAlign = ContentAlignment.BottomRight;
             // 
             // labelTeacher
             // 
             labelTeacher.AutoSize = true;
             labelTeacher.Dock = DockStyle.Top;
-            labelTeacher.Location = new Point(0, 25);
+            labelTeacher.Location = new Point(0, 35);
             labelTeacher.Margin = new Padding(5, 0, 5, 0);
             labelTeacher.MaximumSize = new Size(193, 0);
             labelTeacher.Name = "labelTeacher";
-            labelTeacher.Size = new Size(75, 25);
+            labelTeacher.Padding = new Padding(0, 0, 0, 10);
+            labelTeacher.Size = new Size(75, 35);
             labelTeacher.TabIndex = 3;
             labelTeacher.Text = "teacher";
             // 
@@ -87,7 +91,8 @@
             labelDiscipline.Margin = new Padding(5, 0, 5, 0);
             labelDiscipline.MaximumSize = new Size(193, 0);
             labelDiscipline.Name = "labelDiscipline";
-            labelDiscipline.Size = new Size(92, 25);
+            labelDiscipline.Padding = new Padding(0, 0, 0, 10);
+            labelDiscipline.Size = new Size(92, 35);
             labelDiscipline.TabIndex = 4;
             labelDiscipline.Text = "discipline";
             // 
@@ -110,8 +115,10 @@
             panel1.Controls.Add(labelDiscipline);
             panel1.Location = new Point(3, 3);
             panel1.Name = "panel1";
+            panel1.RightToLeft = RightToLeft.No;
             panel1.Size = new Size(195, 199);
             panel1.TabIndex = 0;
+            panel1.MouseClick += Panel1_MouseClick;
             // 
             // buttonNext
             // 
@@ -162,6 +169,11 @@
             panel2.Size = new Size(210, 515);
             panel2.TabIndex = 11;
             // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(61, 4);
+            // 
             // FormSchedule
             // 
             AutoScaleDimensions = new SizeF(11F, 25F);
@@ -199,5 +211,6 @@
         private Label date1;
         private FlowLayoutPanel flowLayoutPanel2;
         private Panel panel2;
+        private ContextMenuStrip contextMenuStrip1;
     }
 }

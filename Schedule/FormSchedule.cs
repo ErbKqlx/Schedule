@@ -19,6 +19,8 @@ namespace Schedule_project
         private IWorksheet _worksheet;
 
         private ScheduleContext _db;
+
+        private Panel? selectedPanel;
         public FormSchedule(IApplication application, IWorkbook workbook)
         {
             InitializeComponent();
@@ -40,7 +42,8 @@ namespace Schedule_project
             foreach (var schedule in schedules)
             {
                 labelGroup.Text = _db.Groups.FirstOrDefault(v => v.Id == schedule.IdGroup).Name;
-                labelCabinet.Text = _db.Cabinets.FirstOrDefault(v => v.Id == schedule.IdCabinet).Number.ToString();
+                var cabinet = _db.Cabinets.FirstOrDefault(v => v.Id == schedule.IdCabinet);
+                labelCabinet.Text = _db.Buildings.FirstOrDefault(v => v.Id == cabinet.IdBuilding).ShortName + " " + cabinet.Number + " каб.";
                 //label3.Text = schedule.Number.ToString();
                 var disciplinesTeacher = _db.DisciplinesTeachers.FirstOrDefault(v => v.Id == schedule.IdDisciplineTeacher);
                 var discipline = _db.Disciplines.FirstOrDefault(v => v.Id == disciplinesTeacher.IdDiscipline);
@@ -48,7 +51,30 @@ namespace Schedule_project
                 var teacher = _db.Teachers.FirstOrDefault(v => v.Id == disciplinesTeacher.IdTeacher);
                 labelTeacher.Text = $"{teacher.Surname} {teacher.Name} {teacher.Patronymic}";
                 //label6.Text = schedule.Date.ToString();
-            } 
+            }
+
+            var updateMenuItem = new ToolStripMenuItem("Редактировать");
+            updateMenuItem.Click += UpdateMenuItem_Click;
+            var deleteMenuItem = new ToolStripMenuItem("Удалить");
+            deleteMenuItem.Click += DeleteMenuItem_Click;
+
+            if (contextMenuStrip1.Items.Count == 0)
+            {
+                contextMenuStrip1.Items.AddRange(new[] { updateMenuItem, deleteMenuItem });
+            }
+        }
+
+        private void UpdateMenuItem_Click(object? sender, EventArgs e)
+        {
+            var formAdd = new FormAdd();
+            DialogResult result = formAdd.ShowDialog(this);
+
+            if (result == DialogResult.Cancel) { return; }
+        }
+
+        private void DeleteMenuItem_Click(object? sender, EventArgs e)
+        {
+            
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -57,6 +83,17 @@ namespace Schedule_project
 
             _db?.Dispose();
             _db = null;
+        }
+
+        private void Panel1_MouseClick(object sender, MouseEventArgs e)
+        {
+            var selectedPanel = sender as Panel;
+            selectedPanel.BackColor = Color.AliceBlue;
+
+            if (e.Button == MouseButtons.Right)
+            {
+                selectedPanel.ContextMenuStrip = contextMenuStrip1;
+            }
         }
     }
 }
