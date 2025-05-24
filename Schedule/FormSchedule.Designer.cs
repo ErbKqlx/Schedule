@@ -35,8 +35,6 @@
             labelDiscipline = new Label();
             flowLayoutPanel1 = new FlowLayoutPanel();
             panel1 = new Panel();
-            buttonNext = new Button();
-            buttonPrevious = new Button();
             date1 = new Label();
             flowLayoutPanel2 = new FlowLayoutPanel();
             panel2 = new Panel();
@@ -54,9 +52,10 @@
             labelGroup.Location = new Point(498, 9);
             labelGroup.Margin = new Padding(5, 0, 5, 0);
             labelGroup.Name = "labelGroup";
-            labelGroup.Size = new Size(89, 37);
+            labelGroup.Size = new Size(225, 37);
             labelGroup.TabIndex = 0;
-            labelGroup.Text = "group";
+            labelGroup.Text = "mamba mentality";
+            labelGroup.TextAlign = ContentAlignment.TopCenter;
             // 
             // labelCabinet
             // 
@@ -67,7 +66,7 @@
             labelCabinet.RightToLeft = RightToLeft.No;
             labelCabinet.Size = new Size(193, 25);
             labelCabinet.TabIndex = 1;
-            labelCabinet.Text = "cabinet";
+            labelCabinet.Text = "obsession";
             labelCabinet.TextAlign = ContentAlignment.BottomRight;
             // 
             // labelTeacher
@@ -79,9 +78,9 @@
             labelTeacher.MaximumSize = new Size(193, 0);
             labelTeacher.Name = "labelTeacher";
             labelTeacher.Padding = new Padding(0, 0, 0, 10);
-            labelTeacher.Size = new Size(75, 35);
+            labelTeacher.Size = new Size(102, 35);
             labelTeacher.TabIndex = 3;
-            labelTeacher.Text = "teacher";
+            labelTeacher.Text = "motivation";
             // 
             // labelDiscipline
             // 
@@ -118,27 +117,8 @@
             panel1.RightToLeft = RightToLeft.No;
             panel1.Size = new Size(195, 199);
             panel1.TabIndex = 0;
+            panel1.Visible = false;
             panel1.MouseClick += Panel1_MouseClick;
-            // 
-            // buttonNext
-            // 
-            buttonNext.FlatStyle = FlatStyle.Flat;
-            buttonNext.Location = new Point(640, 12);
-            buttonNext.Name = "buttonNext";
-            buttonNext.Size = new Size(35, 34);
-            buttonNext.TabIndex = 7;
-            buttonNext.Text = ">";
-            buttonNext.UseVisualStyleBackColor = true;
-            // 
-            // buttonPrevious
-            // 
-            buttonPrevious.FlatStyle = FlatStyle.Flat;
-            buttonPrevious.Location = new Point(411, 12);
-            buttonPrevious.Name = "buttonPrevious";
-            buttonPrevious.Size = new Size(35, 34);
-            buttonPrevious.TabIndex = 8;
-            buttonPrevious.Text = "<";
-            buttonPrevious.UseVisualStyleBackColor = true;
             // 
             // date1
             // 
@@ -147,9 +127,9 @@
             date1.ImageAlign = ContentAlignment.TopLeft;
             date1.Location = new Point(8, 5);
             date1.Name = "date1";
-            date1.Size = new Size(62, 25);
+            date1.Size = new Size(56, 25);
             date1.TabIndex = 9;
-            date1.Text = "date1";
+            date1.Text = "need";
             date1.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // flowLayoutPanel2
@@ -181,8 +161,6 @@
             BackColor = Color.White;
             ClientSize = new Size(1100, 591);
             Controls.Add(flowLayoutPanel2);
-            Controls.Add(buttonPrevious);
-            Controls.Add(buttonNext);
             Controls.Add(labelGroup);
             Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             Margin = new Padding(5);
@@ -206,8 +184,6 @@
         private Label labelDiscipline;
         private FlowLayoutPanel flowLayoutPanel1;
         private Panel panel1;
-        private Button buttonNext;
-        private Button buttonPrevious;
         private Label date1;
         private FlowLayoutPanel flowLayoutPanel2;
         private Panel panel2;
