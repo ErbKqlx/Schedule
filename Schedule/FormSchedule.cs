@@ -18,7 +18,7 @@ namespace Schedule_project
         private IWorkbook _workbook;
         private IWorksheet _worksheet;
 
-        private ScheduleContext _db;
+        private ScheduleContext? _db;
         private short _id;
 
         private Panel? selectedPanel;
@@ -90,8 +90,6 @@ namespace Schedule_project
             DialogResult result = formAdd.ShowDialog(this);
 
             if (result == DialogResult.Cancel) { return; }
-
-
         }
 
         private void UpdateMenuItem_Click(object? sender, EventArgs e)
