@@ -36,8 +36,9 @@ namespace Schedule_project
 
             _db = new();
             _db.Schedules.Load();
+            _db.Groups.Load();
 
-            date1.Text = _worksheet.Name;
+            labelDate.Text = _worksheet.Name;
 
             var schedules = _db.Schedules.Local.ToList();
             foreach (var schedule in schedules)
@@ -72,6 +73,11 @@ namespace Schedule_project
             {
                 contextMenuStrip1.Items.AddRange(new[] { updateMenuItem, deleteMenuItem });
             }
+
+            comboBoxGroups.DataSource = _db.Groups.Local.ToBindingList();
+            comboBoxGroups.DisplayMember = "Name";
+            comboBoxGroups.ValueMember = "Id";
+            
         }
 
         private void UpdateMenuItem_Click(object? sender, EventArgs e)
@@ -80,13 +86,31 @@ namespace Schedule_project
             DialogResult result = formAdd.ShowDialog(this);
 
             if (result == DialogResult.Cancel) { return; }
+
+
         }
 
         private void DeleteMenuItem_Click(object? sender, EventArgs e)
         {
-            flowLayoutPanel1.Controls.Remove(selectedPanel);
+            if (_id == null) { return; }
 
-            //selectedPanel = null;
+            DialogResult result = MessageBox.Show
+            (
+                "Вы действительно хотите удалить пару?",
+                "Удаление",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (result == DialogResult.No) { return; }
+
+            var schedule = _db.Schedules.Find(_id);
+            _db.Schedules.Remove(schedule);
+
+            flowLayoutPanel1.Controls.Remove(selectedPanel);
+            selectedPanel = null;
+
+            _db.SaveChanges();
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -97,7 +121,7 @@ namespace Schedule_project
             _db = null;
         }
 
-        private void Panel1_MouseClick(object sender, MouseEventArgs e)
+        private void Panel_MouseClick(object sender, MouseEventArgs e)
         {
             var panel = sender as Panel;
             _id = short.Parse(panel.Name.Split("_")[1]);
@@ -171,14 +195,14 @@ namespace Schedule_project
             panel.BackColor = Color.WhiteSmoke;
             panel.BorderStyle = BorderStyle.FixedSingle;
             panel.Controls.Add(labelCabinet);
-            panel.Controls.Add(labelDiscipline);
             panel.Controls.Add(labelTeacher);
+            panel.Controls.Add(labelDiscipline);
             //panel.Location = new Point(3, 3);
             panel.Name = $"panel_{id}";
             panel.RightToLeft = RightToLeft.No;
             panel.Size = new Size(195, 199);
             panel.TabIndex = 0;
-            panel.MouseClick += Panel1_MouseClick;
+            panel.MouseClick += Panel_MouseClick;
 
             flowLayoutPanel1.Controls.Add(panel);
             //panel.ContextMenuStrip = contextMenuStrip1;

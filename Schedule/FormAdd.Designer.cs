@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormAdd));
             flowLayoutPanel1 = new FlowLayoutPanel();
             buttonSave = new Button();
             buttonCancel = new Button();
@@ -41,7 +42,7 @@
             flowLayoutPanel1.Dock = DockStyle.Bottom;
             flowLayoutPanel1.FlowDirection = FlowDirection.RightToLeft;
             flowLayoutPanel1.Location = new Point(0, 313);
-            flowLayoutPanel1.Margin = new Padding(5, 5, 5, 5);
+            flowLayoutPanel1.Margin = new Padding(5);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(389, 63);
             flowLayoutPanel1.TabIndex = 0;
@@ -51,7 +52,7 @@
             buttonSave.BackColor = Color.White;
             buttonSave.DialogResult = DialogResult.OK;
             buttonSave.Location = new Point(235, 5);
-            buttonSave.Margin = new Padding(5, 5, 5, 5);
+            buttonSave.Margin = new Padding(5);
             buttonSave.Name = "buttonSave";
             buttonSave.Size = new Size(149, 50);
             buttonSave.TabIndex = 0;
@@ -78,7 +79,8 @@
             ClientSize = new Size(389, 376);
             Controls.Add(flowLayoutPanel1);
             Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            Margin = new Padding(5, 5, 5, 5);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(5);
             Name = "FormAdd";
             Text = "FormAdd";
             flowLayoutPanel1.ResumeLayout(false);

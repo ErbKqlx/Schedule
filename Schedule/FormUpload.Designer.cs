@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormUpload));
             buttonUpload = new Button();
             panel1 = new Panel();
             openFileDialog1 = new OpenFileDialog();
@@ -36,6 +37,7 @@
             // 
             // buttonUpload
             // 
+            buttonUpload.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             buttonUpload.BackColor = Color.White;
             buttonUpload.FlatStyle = FlatStyle.Flat;
             buttonUpload.Location = new Point(55, 100);
@@ -63,6 +65,7 @@
             ClientSize = new Size(301, 271);
             Controls.Add(panel1);
             Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(5);
             Name = "FormUpload";
             Padding = new Padding(10);
