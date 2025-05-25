@@ -37,6 +37,10 @@ namespace Schedule_project
             _db = new();
             _db.Schedules.Load();
             _db.Groups.Load();
+            _db.Disciplines.Load();
+            _db.Teachers.Load();
+            _db.Buildings.Load();
+            _db.Cabinets.Load();
 
             labelDate.Text = _worksheet.Name;
 
@@ -56,7 +60,7 @@ namespace Schedule_project
                 //label6.Text = schedule.Date.ToString();
                 CreatePanel
                 (
-                    idSchedule, 
+                    idSchedule,
                     groupName,
                     buildingCabinet,
                     disciplineName,
@@ -77,17 +81,25 @@ namespace Schedule_project
             comboBoxGroups.DataSource = _db.Groups.Local.ToBindingList();
             comboBoxGroups.DisplayMember = "Name";
             comboBoxGroups.ValueMember = "Id";
-            
+
         }
 
-        private void UpdateMenuItem_Click(object? sender, EventArgs e)
+        private void ButtonAdd_Click(object sender, EventArgs e)
         {
-            var formAdd = new FormAdd();
+            var formAdd = new FormAdd(_db);
             DialogResult result = formAdd.ShowDialog(this);
 
             if (result == DialogResult.Cancel) { return; }
 
 
+        }
+
+        private void UpdateMenuItem_Click(object? sender, EventArgs e)
+        {
+            var formAdd = new FormAdd(_db);
+            DialogResult result = formAdd.ShowDialog(this);
+
+            if (result == DialogResult.Cancel) { return; }
         }
 
         private void DeleteMenuItem_Click(object? sender, EventArgs e)
@@ -207,5 +219,7 @@ namespace Schedule_project
             flowLayoutPanel1.Controls.Add(panel);
             //panel.ContextMenuStrip = contextMenuStrip1;
         }
+
+        
     }
 }

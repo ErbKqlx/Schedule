@@ -41,6 +41,7 @@
             panel2 = new Panel();
             contextMenuStrip1 = new ContextMenuStrip(components);
             comboBoxGroups = new ComboBox();
+            buttonAdd = new Button();
             flowLayoutPanel1.SuspendLayout();
             panel1.SuspendLayout();
             flowLayoutPanel2.SuspendLayout();
@@ -166,12 +167,24 @@
             comboBoxGroups.Size = new Size(143, 33);
             comboBoxGroups.TabIndex = 11;
             // 
+            // buttonAdd
+            // 
+            buttonAdd.BackColor = Color.White;
+            buttonAdd.Location = new Point(12, 9);
+            buttonAdd.Name = "buttonAdd";
+            buttonAdd.Size = new Size(155, 34);
+            buttonAdd.TabIndex = 12;
+            buttonAdd.Text = "Добавить";
+            buttonAdd.UseVisualStyleBackColor = false;
+            buttonAdd.Click += ButtonAdd_Click;
+            // 
             // FormSchedule
             // 
             AutoScaleDimensions = new SizeF(11F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1100, 591);
+            Controls.Add(buttonAdd);
             Controls.Add(comboBoxGroups);
             Controls.Add(flowLayoutPanel2);
             Controls.Add(labelGroup);
@@ -203,5 +216,6 @@
         private Panel panel2;
         private ContextMenuStrip contextMenuStrip1;
         private ComboBox comboBoxGroups;
+        private Button buttonAdd;
     }
 }
