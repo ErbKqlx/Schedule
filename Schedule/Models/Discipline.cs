@@ -12,4 +12,6 @@ public partial class Discipline
     public string Name { get; set; } = null!;
 
     public virtual ICollection<DisciplinesTeacher> DisciplinesTeachers { get; set; } = new List<DisciplinesTeacher>();
+
+    public string CodeName => $"{Code} {Name}";
 }

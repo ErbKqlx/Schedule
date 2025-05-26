@@ -31,11 +31,11 @@ namespace Schedule_project
             comboBoxGroups.ValueMember = "Id";
 
             comboBoxDisciplines.DataSource = _db.Disciplines.Local.ToBindingList();
-            comboBoxDisciplines.DisplayMember = "Code";
+            comboBoxDisciplines.DisplayMember = "CodeName";
             comboBoxDisciplines.ValueMember = "Id";
 
             comboBoxTeachers.DataSource = _db.Teachers.Local.ToBindingList();
-            comboBoxTeachers.DisplayMember = "Name";
+            comboBoxTeachers.DisplayMember = "FullName";
             comboBoxTeachers.ValueMember = "Id";
 
             comboBoxBuildings.DataSource = _db.Buildings.Local.ToBindingList();
@@ -45,6 +45,7 @@ namespace Schedule_project
             comboBoxCabinets.DataSource = _db.Cabinets.Local.ToBindingList();
             comboBoxCabinets.DisplayMember = "Number";
             comboBoxCabinets.ValueMember = "Id";
+
 
 
         }

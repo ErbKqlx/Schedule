@@ -41,6 +41,7 @@ namespace Schedule_project
             _db.Teachers.Load();
             _db.Buildings.Load();
             _db.Cabinets.Load();
+            _db.DisciplinesTeachers.Load();
 
             labelDate.Text = _worksheet.Name;
 

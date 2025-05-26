@@ -16,4 +16,6 @@ public partial class Teacher
     public virtual ICollection<DisciplinesTeacher> DisciplinesTeachers { get; set; } = new List<DisciplinesTeacher>();
 
     public virtual ICollection<Group> Groups { get; set; } = new List<Group>();
+
+    public string FullName => $"{Surname} {Name} {Patronymic}";
 }

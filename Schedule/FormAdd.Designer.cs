@@ -135,7 +135,7 @@
             comboBoxGroups.FormattingEnabled = true;
             comboBoxGroups.Location = new Point(201, 32);
             comboBoxGroups.Name = "comboBoxGroups";
-            comboBoxGroups.Size = new Size(387, 33);
+            comboBoxGroups.Size = new Size(417, 33);
             comboBoxGroups.TabIndex = 6;
             // 
             // comboBoxDisciplines
@@ -143,7 +143,7 @@
             comboBoxDisciplines.FormattingEnabled = true;
             comboBoxDisciplines.Location = new Point(201, 77);
             comboBoxDisciplines.Name = "comboBoxDisciplines";
-            comboBoxDisciplines.Size = new Size(387, 33);
+            comboBoxDisciplines.Size = new Size(417, 33);
             comboBoxDisciplines.TabIndex = 7;
             // 
             // comboBoxTeachers
@@ -151,7 +151,7 @@
             comboBoxTeachers.FormattingEnabled = true;
             comboBoxTeachers.Location = new Point(201, 122);
             comboBoxTeachers.Name = "comboBoxTeachers";
-            comboBoxTeachers.Size = new Size(387, 33);
+            comboBoxTeachers.Size = new Size(417, 33);
             comboBoxTeachers.TabIndex = 8;
             // 
             // comboBoxCabinets
@@ -159,7 +159,7 @@
             comboBoxCabinets.FormattingEnabled = true;
             comboBoxCabinets.Location = new Point(201, 225);
             comboBoxCabinets.Name = "comboBoxCabinets";
-            comboBoxCabinets.Size = new Size(387, 33);
+            comboBoxCabinets.Size = new Size(417, 33);
             comboBoxCabinets.TabIndex = 9;
             // 
             // comboBoxNumbers
@@ -167,7 +167,7 @@
             comboBoxNumbers.FormattingEnabled = true;
             comboBoxNumbers.Location = new Point(201, 269);
             comboBoxNumbers.Name = "comboBoxNumbers";
-            comboBoxNumbers.Size = new Size(387, 33);
+            comboBoxNumbers.Size = new Size(417, 33);
             comboBoxNumbers.TabIndex = 10;
             // 
             // labelDate
@@ -184,7 +184,7 @@
             comboBoxDate.FormattingEnabled = true;
             comboBoxDate.Location = new Point(201, 318);
             comboBoxDate.Name = "comboBoxDate";
-            comboBoxDate.Size = new Size(387, 33);
+            comboBoxDate.Size = new Size(417, 33);
             comboBoxDate.TabIndex = 12;
             // 
             // labelBuilding
@@ -201,7 +201,7 @@
             comboBoxBuildings.FormattingEnabled = true;
             comboBoxBuildings.Location = new Point(201, 174);
             comboBoxBuildings.Name = "comboBoxBuildings";
-            comboBoxBuildings.Size = new Size(387, 33);
+            comboBoxBuildings.Size = new Size(417, 33);
             comboBoxBuildings.TabIndex = 14;
             // 
             // FormAdd
