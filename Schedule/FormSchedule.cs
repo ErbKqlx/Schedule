@@ -34,6 +34,19 @@ namespace Schedule_project
         {
             base.OnLoad(e);
 
+            var range = _worksheet.Range["B3:C14"];
+            var str = $"{range["B3"].Text}\n\n";
+            //for (var i = 1; i < range.Cells.Length; i++)
+            //{
+            //    str += range.Cells[i].Text + "\n";
+            //}
+            for (var i = 0; i < 12; i+=2)
+            {
+                IRange cell = $"B{4+i}\n";
+                str += cell.;
+            }
+            MessageBox.Show(range.Cells[5].Text);
+
             _db = new();
             _db.Schedules.Load();
             _db.Groups.Load();
