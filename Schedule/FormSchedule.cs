@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Schedule_project.Models;
 using Syncfusion.XlsIO;
 using System;
 using System.Collections.Generic;
@@ -33,21 +34,51 @@ namespace Schedule_project
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+            _db = new();
 
             var range = _worksheet.Range["B3:C14"];
-            var str = $"{range["B3"].Text}\n\n";
-            //for (var i = 1; i < range.Cells.Length; i++)
-            //{
-            //    str += range.Cells[i].Text + "\n";
-            //}
+            var group = $"{range["B3"].Text}\n\n";
+            var date = _worksheet.Name.Split(' ')[0] + ".2025";
             for (var i = 0; i < 12; i+=2)
             {
-                IRange cell = $"B{4+i}\n";
-                str += cell.;
-            }
-            MessageBox.Show(range.Cells[5].Text);
+                //пара
+                var pair = range[$"B{4 + i}"].Text;
+                var number = range[$"A{4 + i}"].Text;
 
-            _db = new();
+                //дисциплина с преподавателем
+                var discipline = pair.Split('\n')[0];
+                var teacher = pair.Split('\n')[1];
+
+                if (discipline != "Разговоры о важном") 
+                {
+                    var code = discipline.Substring(0, discipline.IndexOf(' '));
+                    discipline = discipline.Substring(discipline.IndexOf(' ')+1);
+                    
+                    if (_db.Disciplines.First(v => v.Code == code) == null)
+                    {
+                        _db.Disciplines.Add(new Discipline {  });
+                    }
+                }
+
+                //кабинет с корпусом
+                var cabinet = range[$"C{4 + i}"].Text;
+                var building = cabinet.Split('\n')[0];
+                cabinet = cabinet.Split('\n')[1];
+
+                Schedule schedule = new Schedule
+                {
+                    IdGroup = _db.Groups.FirstOrDefault(v => v.Name == group).Id,
+                    IdCabinet = _db.Cabinets.FirstOrDefault(v => v.IdBuilding == _db.Buildings.FirstOrDefault(i => i.ShortName == building).Id).Id,
+                    Number = short.Parse(number),
+                    //IdDisciplineTeacher = ,
+                    Date = DateOnly.Parse(date)
+                };
+
+            }
+
+            //cabinets = range[$"C4"].Text.Split('\n');
+            //MessageBox.Show(cabinets[0]);
+            
             _db.Schedules.Load();
             _db.Groups.Load();
             _db.Disciplines.Load();
