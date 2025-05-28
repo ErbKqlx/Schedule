@@ -96,7 +96,9 @@ namespace Schedule_project
                 };
                 _db.DisciplinesTeachers.Add(disciplineTeacher);
                 _db.SaveChanges();
-                
+
+                _db.Disciplines.Load();
+                _db.DisciplinesTeachers.Load();
 
                 //кабинет с корпусом
                 var cabinet = range[$"C{4 + i}"].Text;
@@ -123,8 +125,8 @@ namespace Schedule_project
             //MessageBox.Show(cabinets[0]);
             
             _db.Schedules.Load();
-            _db.Disciplines.Load();
-            _db.DisciplinesTeachers.Load();
+            
+            
 
             labelDate.Text = _worksheet.Name;
 
