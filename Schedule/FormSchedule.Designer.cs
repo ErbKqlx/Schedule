@@ -106,7 +106,7 @@
             labelGroup.Location = new Point(633, 9);
             labelGroup.Margin = new Padding(5, 0, 5, 0);
             labelGroup.Name = "labelGroup";
-            labelGroup.Size = new Size(89, 37);
+            labelGroup.Size = new Size(111, 46);
             labelGroup.TabIndex = 0;
             labelGroup.Text = "group";
             labelGroup.TextAlign = ContentAlignment.TopCenter;
@@ -127,12 +127,12 @@
             // 
             labelTeacher.AutoSize = true;
             labelTeacher.Dock = DockStyle.Top;
-            labelTeacher.Location = new Point(0, 35);
+            labelTeacher.Location = new Point(0, 42);
             labelTeacher.Margin = new Padding(5, 0, 5, 0);
             labelTeacher.MaximumSize = new Size(193, 0);
             labelTeacher.Name = "labelTeacher";
             labelTeacher.Padding = new Padding(0, 0, 0, 10);
-            labelTeacher.Size = new Size(75, 35);
+            labelTeacher.Size = new Size(93, 42);
             labelTeacher.TabIndex = 3;
             labelTeacher.Text = "teacher";
             // 
@@ -145,7 +145,7 @@
             labelDiscipline.MaximumSize = new Size(193, 0);
             labelDiscipline.Name = "labelDiscipline";
             labelDiscipline.Padding = new Padding(0, 0, 0, 10);
-            labelDiscipline.Size = new Size(92, 35);
+            labelDiscipline.Size = new Size(114, 42);
             labelDiscipline.TabIndex = 4;
             labelDiscipline.Text = "discipline";
             // 
@@ -181,7 +181,7 @@
             labelDate.ImageAlign = ContentAlignment.TopLeft;
             labelDate.Location = new Point(8, 5);
             labelDate.Name = "labelDate";
-            labelDate.Size = new Size(51, 25);
+            labelDate.Size = new Size(64, 32);
             labelDate.TabIndex = 9;
             labelDate.Text = "date";
             labelDate.TextAlign = ContentAlignment.MiddleCenter;
@@ -257,12 +257,12 @@
             // 
             label2.AutoSize = true;
             label2.Dock = DockStyle.Top;
-            label2.Location = new Point(0, 35);
+            label2.Location = new Point(0, 42);
             label2.Margin = new Padding(5, 0, 5, 0);
             label2.MaximumSize = new Size(193, 0);
             label2.Name = "label2";
             label2.Padding = new Padding(0, 0, 0, 10);
-            label2.Size = new Size(75, 35);
+            label2.Size = new Size(93, 42);
             label2.TabIndex = 3;
             label2.Text = "teacher";
             // 
@@ -275,7 +275,7 @@
             label3.MaximumSize = new Size(193, 0);
             label3.Name = "label3";
             label3.Padding = new Padding(0, 0, 0, 10);
-            label3.Size = new Size(92, 35);
+            label3.Size = new Size(114, 42);
             label3.TabIndex = 4;
             label3.Text = "discipline";
             // 
@@ -286,7 +286,7 @@
             label4.ImageAlign = ContentAlignment.TopLeft;
             label4.Location = new Point(8, 5);
             label4.Name = "label4";
-            label4.Size = new Size(51, 25);
+            label4.Size = new Size(64, 32);
             label4.TabIndex = 9;
             label4.Text = "date";
             label4.TextAlign = ContentAlignment.MiddleCenter;
@@ -340,12 +340,12 @@
             // 
             label6.AutoSize = true;
             label6.Dock = DockStyle.Top;
-            label6.Location = new Point(0, 35);
+            label6.Location = new Point(0, 42);
             label6.Margin = new Padding(5, 0, 5, 0);
             label6.MaximumSize = new Size(193, 0);
             label6.Name = "label6";
             label6.Padding = new Padding(0, 0, 0, 10);
-            label6.Size = new Size(75, 35);
+            label6.Size = new Size(93, 42);
             label6.TabIndex = 3;
             label6.Text = "teacher";
             // 
@@ -358,7 +358,7 @@
             label7.MaximumSize = new Size(193, 0);
             label7.Name = "label7";
             label7.Padding = new Padding(0, 0, 0, 10);
-            label7.Size = new Size(92, 35);
+            label7.Size = new Size(114, 42);
             label7.TabIndex = 4;
             label7.Text = "discipline";
             // 
@@ -369,7 +369,7 @@
             label8.ImageAlign = ContentAlignment.TopLeft;
             label8.Location = new Point(8, 5);
             label8.Name = "label8";
-            label8.Size = new Size(51, 25);
+            label8.Size = new Size(64, 32);
             label8.TabIndex = 9;
             label8.Text = "date";
             label8.TextAlign = ContentAlignment.MiddleCenter;
@@ -423,12 +423,12 @@
             // 
             label10.AutoSize = true;
             label10.Dock = DockStyle.Top;
-            label10.Location = new Point(0, 35);
+            label10.Location = new Point(0, 42);
             label10.Margin = new Padding(5, 0, 5, 0);
             label10.MaximumSize = new Size(193, 0);
             label10.Name = "label10";
             label10.Padding = new Padding(0, 0, 0, 10);
-            label10.Size = new Size(75, 35);
+            label10.Size = new Size(93, 42);
             label10.TabIndex = 3;
             label10.Text = "teacher";
             // 
@@ -441,7 +441,7 @@
             label11.MaximumSize = new Size(193, 0);
             label11.Name = "label11";
             label11.Padding = new Padding(0, 0, 0, 10);
-            label11.Size = new Size(92, 35);
+            label11.Size = new Size(114, 42);
             label11.TabIndex = 4;
             label11.Text = "discipline";
             // 
@@ -452,7 +452,7 @@
             label12.ImageAlign = ContentAlignment.TopLeft;
             label12.Location = new Point(8, 5);
             label12.Name = "label12";
-            label12.Size = new Size(51, 25);
+            label12.Size = new Size(64, 32);
             label12.TabIndex = 9;
             label12.Text = "date";
             label12.TextAlign = ContentAlignment.MiddleCenter;
@@ -506,12 +506,12 @@
             // 
             label14.AutoSize = true;
             label14.Dock = DockStyle.Top;
-            label14.Location = new Point(0, 35);
+            label14.Location = new Point(0, 42);
             label14.Margin = new Padding(5, 0, 5, 0);
             label14.MaximumSize = new Size(193, 0);
             label14.Name = "label14";
             label14.Padding = new Padding(0, 0, 0, 10);
-            label14.Size = new Size(75, 35);
+            label14.Size = new Size(93, 42);
             label14.TabIndex = 3;
             label14.Text = "teacher";
             // 
@@ -524,7 +524,7 @@
             label15.MaximumSize = new Size(193, 0);
             label15.Name = "label15";
             label15.Padding = new Padding(0, 0, 0, 10);
-            label15.Size = new Size(92, 35);
+            label15.Size = new Size(114, 42);
             label15.TabIndex = 4;
             label15.Text = "discipline";
             // 
@@ -535,7 +535,7 @@
             label16.ImageAlign = ContentAlignment.TopLeft;
             label16.Location = new Point(8, 5);
             label16.Name = "label16";
-            label16.Size = new Size(51, 25);
+            label16.Size = new Size(64, 32);
             label16.TabIndex = 9;
             label16.Text = "date";
             label16.TextAlign = ContentAlignment.MiddleCenter;
@@ -589,12 +589,12 @@
             // 
             label18.AutoSize = true;
             label18.Dock = DockStyle.Top;
-            label18.Location = new Point(0, 35);
+            label18.Location = new Point(0, 42);
             label18.Margin = new Padding(5, 0, 5, 0);
             label18.MaximumSize = new Size(193, 0);
             label18.Name = "label18";
             label18.Padding = new Padding(0, 0, 0, 10);
-            label18.Size = new Size(75, 35);
+            label18.Size = new Size(93, 42);
             label18.TabIndex = 3;
             label18.Text = "teacher";
             // 
@@ -607,7 +607,7 @@
             label19.MaximumSize = new Size(193, 0);
             label19.Name = "label19";
             label19.Padding = new Padding(0, 0, 0, 10);
-            label19.Size = new Size(92, 35);
+            label19.Size = new Size(114, 42);
             label19.TabIndex = 4;
             label19.Text = "discipline";
             // 
@@ -618,13 +618,14 @@
             label20.ImageAlign = ContentAlignment.TopLeft;
             label20.Location = new Point(8, 5);
             label20.Name = "label20";
-            label20.Size = new Size(51, 25);
+            label20.Size = new Size(64, 32);
             label20.TabIndex = 9;
             label20.Text = "date";
             label20.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // contextMenuStrip1
             // 
+            contextMenuStrip1.ImageScalingSize = new Size(20, 20);
             contextMenuStrip1.Name = "contextMenuStrip1";
             contextMenuStrip1.Size = new Size(61, 4);
             // 
@@ -634,7 +635,7 @@
             comboBoxGroups.FormattingEnabled = true;
             comboBoxGroups.Location = new Point(1167, 13);
             comboBoxGroups.Name = "comboBoxGroups";
-            comboBoxGroups.Size = new Size(143, 33);
+            comboBoxGroups.Size = new Size(143, 40);
             comboBoxGroups.TabIndex = 11;
             // 
             // buttonAdd
@@ -650,7 +651,7 @@
             // 
             // FormSchedule
             // 
-            AutoScaleDimensions = new SizeF(11F, 25F);
+            AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1322, 591);

@@ -18,4 +18,6 @@ public partial class Teacher
     public virtual ICollection<Group> Groups { get; set; } = new List<Group>();
 
     public string FullName => $"{Surname} {Name} {Patronymic}";
+
+    public string ShortName => $"{Surname} {Name[0]}.{Patronymic[0]}.";
 }
