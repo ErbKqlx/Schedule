@@ -56,9 +56,9 @@ namespace Schedule_project
                 var discipline = pair.Split('\n')[0];
                 string? code = null;
                 string name = "";
-                if (regex.IsMatch(discipline.Substring(0, discipline.IndexOf(' '))))
+                if (regex.IsMatch(discipline))
                 {
-                    code = discipline.Substring(0, regex.Match(discipline).Index+1);
+                    code = discipline.Substring(0, regex.Match(discipline).Index + 1);
                     name = discipline.Substring(regex.Match(discipline).Index + 2);
                 }
                 else
