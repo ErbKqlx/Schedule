@@ -163,7 +163,7 @@ namespace Schedule_project
                 var groupName = _db.Groups.FirstOrDefault(v => v.Id == schedule.IdGroup).Name;
                 var cabinet = _db.Cabinets.FirstOrDefault(v => v.Id == schedule.IdCabinet);
                 var buildingCabinet = _db.Buildings.FirstOrDefault(v => v.Id == cabinet.IdBuilding).ShortName + " " + cabinet.Number + " каб.";
-                //label3.Text = schedule.Number.ToString();
+                var number = schedule.Number;
                 var disciplinesTeacher = _db.DisciplinesTeachers.FirstOrDefault(v => v.Id == schedule.IdDisciplineTeacher);
                 var discipline = _db.Disciplines.FirstOrDefault(v => v.Id == disciplinesTeacher.IdDiscipline);
                 var disciplineName = $"{discipline.Code} {discipline.Name}";
@@ -176,7 +176,8 @@ namespace Schedule_project
                     groupName,
                     buildingCabinet,
                     disciplineName,
-                    teacherName
+                    teacherName,
+                    number
                 );
             }
 
@@ -229,7 +230,7 @@ namespace Schedule_project
             var schedule = _db.Schedules.Find(_id);
             _db.Schedules.Remove(schedule);
 
-            flowLayoutPanel1.Controls.Remove(selectedPanel);
+            tableLayoutPanelSchedule.Controls.Remove(selectedPanel);
             selectedPanel = null;
 
             _db.SaveChanges();
@@ -260,7 +261,7 @@ namespace Schedule_project
 
         }
 
-        private void CreatePanel(short id, string groupName, string buildingCabinet, string disciplineName, string teacherName)
+        private void CreatePanel(short id, string groupName, string buildingCabinet, string disciplineName, string teacherName, short number)
         {
             var labelCabinet = new Label();
             var labelDiscipline = new Label();
@@ -326,7 +327,7 @@ namespace Schedule_project
             panel.TabIndex = 0;
             panel.MouseClick += Panel_MouseClick;
 
-            flowLayoutPanel1.Controls.Add(panel);
+            tableLayoutPanelSchedule.Controls.Add(panel, 1, number);
             //panel.ContextMenuStrip = contextMenuStrip1;
         }
 
