@@ -151,6 +151,7 @@
             // 
             // flowLayoutPanel1
             // 
+            flowLayoutPanel1.AutoSize = true;
             flowLayoutPanel1.Controls.Add(panel1);
             flowLayoutPanel1.FlowDirection = FlowDirection.TopDown;
             flowLayoutPanel1.Location = new Point(5, 35);
@@ -188,6 +189,7 @@
             // 
             // flowLayoutPanel2
             // 
+            flowLayoutPanel2.AutoSize = true;
             flowLayoutPanel2.Controls.Add(panel2);
             flowLayoutPanel2.Controls.Add(panel3);
             flowLayoutPanel2.Controls.Add(panel5);
@@ -653,6 +655,7 @@
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoSize = true;
             BackColor = Color.White;
             ClientSize = new Size(1322, 591);
             Controls.Add(buttonAdd);

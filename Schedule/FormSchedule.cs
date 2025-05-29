@@ -43,13 +43,15 @@ namespace Schedule_project
             _db.Cabinets.Load();
 
             var range = _worksheet.Range["B3:C14"];
-            var group = $"{range["B3"].Text}\n\n";
+            var group = $"{range["B3"].Text}";
             var date = _worksheet.Name.Split(' ')[0] + ".2025";
             for (var i = 0; i < 12; i+=2)
             {
                 //пара
                 var pair = range[$"B{4 + i}"].Text;
-                var number = range[$"A{4 + i}"].Text;
+                if (pair == null) { continue; }
+
+                var number = range[$"A{4 + i}"].DisplayText;
 
                 //дисциплина с преподавателем
                 var regex = new Regex(@"\d", RegexOptions.RightToLeft);
@@ -71,7 +73,7 @@ namespace Schedule_project
                 Discipline element;
                 if (code != null)
                 {
-                    element = _db.Disciplines.First(v => v.Code == code);
+                    element = _db.Disciplines.FirstOrDefault(v => v.Code == code);
                     if (element == null)
                     {
                         element = new Discipline { Code = code, Name = name };
@@ -80,7 +82,7 @@ namespace Schedule_project
                 }
                 else
                 {
-                    element = _db.Disciplines.First(v => v.Name == name);
+                    element = _db.Disciplines.FirstOrDefault(v => v.Name == name);
                     if (element == null)
                     {
                         element = new Discipline { Name = name };
@@ -94,8 +96,17 @@ namespace Schedule_project
                     IdDiscipline = element.Id,
                     IdTeacher = _db.Teachers.Local.FirstOrDefault(v => v.ShortName == teacherName).Id
                 };
-                _db.DisciplinesTeachers.Add(disciplineTeacher);
-                _db.SaveChanges();
+
+                if (_db.DisciplinesTeachers.FirstOrDefault
+                    (
+                        v => v.IdDiscipline == disciplineTeacher.IdDiscipline
+                        && v.IdTeacher == disciplineTeacher.IdTeacher
+                    ) == null)
+                {
+                    _db.DisciplinesTeachers.Add(disciplineTeacher);
+                    _db.SaveChanges();
+                }
+                
 
                 _db.Disciplines.Load();
                 _db.DisciplinesTeachers.Load();
@@ -104,21 +115,36 @@ namespace Schedule_project
                 var cabinet = range[$"C{4 + i}"].Text;
                 var building = cabinet.Split('\n')[0];
                 cabinet = cabinet.Split('\n')[1];
+                cabinet = cabinet.Substring(cabinet.IndexOf(' ')+1);
 
                 Schedule schedule = new Schedule
                 {
-                    IdGroup = _db.Groups.FirstOrDefault(v => v.Name == group).Id,
-                    IdCabinet = _db.Cabinets.FirstOrDefault(v => 
-                        v.IdBuilding == _db.Buildings.FirstOrDefault(i => i.ShortName == building).Id).Id,
+                    IdGroup = _db.Groups.Local.FirstOrDefault(v => v.Name == group).Id,
+                    IdCabinet = _db.Cabinets.Local.FirstOrDefault(v =>
+                        v.Number == short.Parse(cabinet)
+                        && v.IdBuilding == _db.Buildings.Local.FirstOrDefault(i => i.ShortName == building).Id
+                        ).Id,
                     Number = short.Parse(number),
-                    IdDisciplineTeacher = _db.DisciplinesTeachers.FirstOrDefault(v => 
-                        v.IdDiscipline == _db.Disciplines.FirstOrDefault(i => i.Code == code).Id
-                        && v.IdTeacher == _db.Teachers.FirstOrDefault(v => v.ShortName == teacherName).Id).Id,
+                    IdDisciplineTeacher = _db.DisciplinesTeachers.Local.FirstOrDefault(v =>
+                        v.IdDiscipline == _db.Disciplines.Local.FirstOrDefault(i => i.Code == code).Id
+                        && v.IdTeacher == _db.Teachers.Local.FirstOrDefault(v => v.ShortName == teacherName).Id).Id,
                     Date = DateOnly.Parse(date)
                 };
 
-                _db.Schedules.Add(schedule);
-                _db.SaveChanges();
+                if (_db.Schedules.FirstOrDefault
+                    (
+                        v => v.IdGroup == schedule.IdGroup
+                        && v.IdCabinet == schedule.IdCabinet
+                        && v.Number == schedule.Number
+                        && v.IdDisciplineTeacher == schedule.IdDisciplineTeacher
+                        && v.Date == schedule.Date
+                    ) == null)
+                {
+                    _db.Schedules.Add(schedule);
+                    _db.SaveChanges();
+                }
+                
+                
             }
 
             //cabinets = range[$"C4"].Text.Split('\n');
