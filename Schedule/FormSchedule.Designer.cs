@@ -39,18 +39,18 @@
             labelCabinet = new Label();
             labelTeacher = new Label();
             labelDiscipline = new Label();
-            labelDate = new Label();
+            labelDate1 = new Label();
             tableLayoutPanelSchedule = new TableLayoutPanel();
             sixth = new Label();
             fifth = new Label();
             fourth = new Label();
             third = new Label();
             second = new Label();
-            label20 = new Label();
-            label19 = new Label();
-            label18 = new Label();
-            label17 = new Label();
-            label16 = new Label();
+            labelDate6 = new Label();
+            labelDate5 = new Label();
+            labelDate4 = new Label();
+            labelDate3 = new Label();
+            labelDate2 = new Label();
             panel6 = new Panel();
             label13 = new Label();
             label14 = new Label();
@@ -90,7 +90,7 @@
             labelGroup.Location = new Point(734, 10);
             labelGroup.Margin = new Padding(5, 0, 5, 0);
             labelGroup.Name = "labelGroup";
-            labelGroup.Size = new Size(89, 37);
+            labelGroup.Size = new Size(111, 46);
             labelGroup.TabIndex = 0;
             labelGroup.Text = "group";
             labelGroup.TextAlign = ContentAlignment.TopCenter;
@@ -107,7 +107,7 @@
             comboBoxGroups.FormattingEnabled = true;
             comboBoxGroups.Location = new Point(1275, 11);
             comboBoxGroups.Name = "comboBoxGroups";
-            comboBoxGroups.Size = new Size(133, 33);
+            comboBoxGroups.Size = new Size(133, 40);
             comboBoxGroups.TabIndex = 11;
             // 
             // buttonAdd
@@ -141,7 +141,7 @@
             panel1.Controls.Add(labelTeacher);
             panel1.Controls.Add(labelDiscipline);
             panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(30, 30);
+            panel1.Location = new Point(30, 37);
             panel1.Name = "panel1";
             panel1.RightToLeft = RightToLeft.No;
             panel1.Size = new Size(227, 225);
@@ -164,12 +164,12 @@
             // 
             labelTeacher.AutoSize = true;
             labelTeacher.Dock = DockStyle.Top;
-            labelTeacher.Location = new Point(0, 35);
+            labelTeacher.Location = new Point(0, 42);
             labelTeacher.Margin = new Padding(5, 0, 5, 0);
             labelTeacher.MaximumSize = new Size(193, 0);
             labelTeacher.Name = "labelTeacher";
             labelTeacher.Padding = new Padding(0, 0, 0, 10);
-            labelTeacher.Size = new Size(75, 35);
+            labelTeacher.Size = new Size(93, 42);
             labelTeacher.TabIndex = 3;
             labelTeacher.Text = "teacher";
             // 
@@ -182,22 +182,22 @@
             labelDiscipline.MaximumSize = new Size(193, 0);
             labelDiscipline.Name = "labelDiscipline";
             labelDiscipline.Padding = new Padding(0, 0, 0, 10);
-            labelDiscipline.Size = new Size(92, 35);
+            labelDiscipline.Size = new Size(114, 42);
             labelDiscipline.TabIndex = 4;
             labelDiscipline.Text = "discipline";
             // 
-            // labelDate
+            // labelDate1
             // 
-            labelDate.AutoSize = true;
-            labelDate.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            labelDate.ImageAlign = ContentAlignment.TopLeft;
-            labelDate.Location = new Point(30, 1);
-            labelDate.Name = "labelDate";
-            labelDate.Size = new Size(51, 25);
-            labelDate.TabIndex = 15;
-            labelDate.Text = "date";
-            labelDate.TextAlign = ContentAlignment.MiddleCenter;
-            labelDate.Visible = false;
+            labelDate1.AutoSize = true;
+            labelDate1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            labelDate1.ImageAlign = ContentAlignment.TopLeft;
+            labelDate1.Location = new Point(30, 1);
+            labelDate1.Name = "labelDate1";
+            labelDate1.Size = new Size(64, 32);
+            labelDate1.TabIndex = 15;
+            labelDate1.Text = "date";
+            labelDate1.TextAlign = ContentAlignment.MiddleCenter;
+            labelDate1.Visible = false;
             // 
             // tableLayoutPanelSchedule
             // 
@@ -216,18 +216,18 @@
             tableLayoutPanelSchedule.Controls.Add(fourth, 0, 4);
             tableLayoutPanelSchedule.Controls.Add(third, 0, 3);
             tableLayoutPanelSchedule.Controls.Add(second, 0, 2);
-            tableLayoutPanelSchedule.Controls.Add(label20, 6, 0);
-            tableLayoutPanelSchedule.Controls.Add(label19, 5, 0);
-            tableLayoutPanelSchedule.Controls.Add(label18, 4, 0);
-            tableLayoutPanelSchedule.Controls.Add(label17, 3, 0);
-            tableLayoutPanelSchedule.Controls.Add(label16, 2, 0);
+            tableLayoutPanelSchedule.Controls.Add(labelDate6, 6, 0);
+            tableLayoutPanelSchedule.Controls.Add(labelDate5, 5, 0);
+            tableLayoutPanelSchedule.Controls.Add(labelDate4, 4, 0);
+            tableLayoutPanelSchedule.Controls.Add(labelDate3, 3, 0);
+            tableLayoutPanelSchedule.Controls.Add(labelDate2, 2, 0);
             tableLayoutPanelSchedule.Controls.Add(panel6, 6, 1);
             tableLayoutPanelSchedule.Controls.Add(panel5, 5, 1);
             tableLayoutPanelSchedule.Controls.Add(panel4, 4, 1);
             tableLayoutPanelSchedule.Controls.Add(panel3, 3, 1);
             tableLayoutPanelSchedule.Controls.Add(panel2, 2, 1);
             tableLayoutPanelSchedule.Controls.Add(panel1, 1, 1);
-            tableLayoutPanelSchedule.Controls.Add(labelDate, 1, 0);
+            tableLayoutPanelSchedule.Controls.Add(labelDate1, 1, 0);
             tableLayoutPanelSchedule.Controls.Add(first, 0, 1);
             tableLayoutPanelSchedule.Dock = DockStyle.Fill;
             tableLayoutPanelSchedule.Location = new Point(10, 69);
@@ -246,7 +246,7 @@
             // sixth
             // 
             sixth.Dock = DockStyle.Fill;
-            sixth.Location = new Point(4, 1187);
+            sixth.Location = new Point(4, 1194);
             sixth.Name = "sixth";
             sixth.Size = new Size(19, 231);
             sixth.TabIndex = 31;
@@ -256,7 +256,7 @@
             // fifth
             // 
             fifth.Dock = DockStyle.Fill;
-            fifth.Location = new Point(4, 955);
+            fifth.Location = new Point(4, 962);
             fifth.Name = "fifth";
             fifth.Size = new Size(19, 231);
             fifth.TabIndex = 30;
@@ -266,7 +266,7 @@
             // fourth
             // 
             fourth.Dock = DockStyle.Fill;
-            fourth.Location = new Point(4, 723);
+            fourth.Location = new Point(4, 730);
             fourth.Name = "fourth";
             fourth.Size = new Size(19, 231);
             fourth.TabIndex = 29;
@@ -276,7 +276,7 @@
             // third
             // 
             third.Dock = DockStyle.Fill;
-            third.Location = new Point(4, 491);
+            third.Location = new Point(4, 498);
             third.Name = "third";
             third.Size = new Size(19, 231);
             third.TabIndex = 28;
@@ -286,77 +286,77 @@
             // second
             // 
             second.Dock = DockStyle.Fill;
-            second.Location = new Point(4, 259);
+            second.Location = new Point(4, 266);
             second.Name = "second";
             second.Size = new Size(19, 231);
             second.TabIndex = 27;
             second.Text = "2";
             second.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // label20
+            // labelDate6
             // 
-            label20.AutoSize = true;
-            label20.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label20.ImageAlign = ContentAlignment.TopLeft;
-            label20.Location = new Point(1200, 1);
-            label20.Name = "label20";
-            label20.Size = new Size(51, 25);
-            label20.TabIndex = 25;
-            label20.Text = "date";
-            label20.TextAlign = ContentAlignment.MiddleCenter;
-            label20.Visible = false;
+            labelDate6.AutoSize = true;
+            labelDate6.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            labelDate6.ImageAlign = ContentAlignment.TopLeft;
+            labelDate6.Location = new Point(1200, 1);
+            labelDate6.Name = "labelDate6";
+            labelDate6.Size = new Size(64, 32);
+            labelDate6.TabIndex = 25;
+            labelDate6.Text = "date";
+            labelDate6.TextAlign = ContentAlignment.MiddleCenter;
+            labelDate6.Visible = false;
             // 
-            // label19
+            // labelDate5
             // 
-            label19.AutoSize = true;
-            label19.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label19.ImageAlign = ContentAlignment.TopLeft;
-            label19.Location = new Point(966, 1);
-            label19.Name = "label19";
-            label19.Size = new Size(51, 25);
-            label19.TabIndex = 24;
-            label19.Text = "date";
-            label19.TextAlign = ContentAlignment.MiddleCenter;
-            label19.Visible = false;
+            labelDate5.AutoSize = true;
+            labelDate5.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            labelDate5.ImageAlign = ContentAlignment.TopLeft;
+            labelDate5.Location = new Point(966, 1);
+            labelDate5.Name = "labelDate5";
+            labelDate5.Size = new Size(64, 32);
+            labelDate5.TabIndex = 24;
+            labelDate5.Text = "date";
+            labelDate5.TextAlign = ContentAlignment.MiddleCenter;
+            labelDate5.Visible = false;
             // 
-            // label18
+            // labelDate4
             // 
-            label18.AutoSize = true;
-            label18.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label18.ImageAlign = ContentAlignment.TopLeft;
-            label18.Location = new Point(732, 1);
-            label18.Name = "label18";
-            label18.Size = new Size(51, 25);
-            label18.TabIndex = 23;
-            label18.Text = "date";
-            label18.TextAlign = ContentAlignment.MiddleCenter;
-            label18.Visible = false;
+            labelDate4.AutoSize = true;
+            labelDate4.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            labelDate4.ImageAlign = ContentAlignment.TopLeft;
+            labelDate4.Location = new Point(732, 1);
+            labelDate4.Name = "labelDate4";
+            labelDate4.Size = new Size(64, 32);
+            labelDate4.TabIndex = 23;
+            labelDate4.Text = "date";
+            labelDate4.TextAlign = ContentAlignment.MiddleCenter;
+            labelDate4.Visible = false;
             // 
-            // label17
+            // labelDate3
             // 
-            label17.AutoSize = true;
-            label17.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label17.ImageAlign = ContentAlignment.TopLeft;
-            label17.Location = new Point(498, 1);
-            label17.Name = "label17";
-            label17.Size = new Size(51, 25);
-            label17.TabIndex = 22;
-            label17.Text = "date";
-            label17.TextAlign = ContentAlignment.MiddleCenter;
-            label17.Visible = false;
+            labelDate3.AutoSize = true;
+            labelDate3.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            labelDate3.ImageAlign = ContentAlignment.TopLeft;
+            labelDate3.Location = new Point(498, 1);
+            labelDate3.Name = "labelDate3";
+            labelDate3.Size = new Size(64, 32);
+            labelDate3.TabIndex = 22;
+            labelDate3.Text = "date";
+            labelDate3.TextAlign = ContentAlignment.MiddleCenter;
+            labelDate3.Visible = false;
             // 
-            // label16
+            // labelDate2
             // 
-            label16.AutoSize = true;
-            label16.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label16.ImageAlign = ContentAlignment.TopLeft;
-            label16.Location = new Point(264, 1);
-            label16.Name = "label16";
-            label16.Size = new Size(51, 25);
-            label16.TabIndex = 21;
-            label16.Text = "date";
-            label16.TextAlign = ContentAlignment.MiddleCenter;
-            label16.Visible = false;
+            labelDate2.AutoSize = true;
+            labelDate2.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            labelDate2.ImageAlign = ContentAlignment.TopLeft;
+            labelDate2.Location = new Point(264, 1);
+            labelDate2.Name = "labelDate2";
+            labelDate2.Size = new Size(64, 32);
+            labelDate2.TabIndex = 21;
+            labelDate2.Text = "date";
+            labelDate2.TextAlign = ContentAlignment.MiddleCenter;
+            labelDate2.Visible = false;
             // 
             // panel6
             // 
@@ -366,7 +366,7 @@
             panel6.Controls.Add(label14);
             panel6.Controls.Add(label15);
             panel6.Dock = DockStyle.Fill;
-            panel6.Location = new Point(1200, 30);
+            panel6.Location = new Point(1200, 37);
             panel6.Name = "panel6";
             panel6.RightToLeft = RightToLeft.No;
             panel6.Size = new Size(316, 225);
@@ -389,12 +389,12 @@
             // 
             label14.AutoSize = true;
             label14.Dock = DockStyle.Top;
-            label14.Location = new Point(0, 35);
+            label14.Location = new Point(0, 42);
             label14.Margin = new Padding(5, 0, 5, 0);
             label14.MaximumSize = new Size(193, 0);
             label14.Name = "label14";
             label14.Padding = new Padding(0, 0, 0, 10);
-            label14.Size = new Size(75, 35);
+            label14.Size = new Size(93, 42);
             label14.TabIndex = 3;
             label14.Text = "teacher";
             // 
@@ -407,7 +407,7 @@
             label15.MaximumSize = new Size(193, 0);
             label15.Name = "label15";
             label15.Padding = new Padding(0, 0, 0, 10);
-            label15.Size = new Size(92, 35);
+            label15.Size = new Size(114, 42);
             label15.TabIndex = 4;
             label15.Text = "discipline";
             // 
@@ -419,7 +419,7 @@
             panel5.Controls.Add(label11);
             panel5.Controls.Add(label12);
             panel5.Dock = DockStyle.Fill;
-            panel5.Location = new Point(966, 30);
+            panel5.Location = new Point(966, 37);
             panel5.Name = "panel5";
             panel5.RightToLeft = RightToLeft.No;
             panel5.Size = new Size(227, 225);
@@ -442,12 +442,12 @@
             // 
             label11.AutoSize = true;
             label11.Dock = DockStyle.Top;
-            label11.Location = new Point(0, 35);
+            label11.Location = new Point(0, 42);
             label11.Margin = new Padding(5, 0, 5, 0);
             label11.MaximumSize = new Size(193, 0);
             label11.Name = "label11";
             label11.Padding = new Padding(0, 0, 0, 10);
-            label11.Size = new Size(75, 35);
+            label11.Size = new Size(93, 42);
             label11.TabIndex = 3;
             label11.Text = "teacher";
             // 
@@ -460,7 +460,7 @@
             label12.MaximumSize = new Size(193, 0);
             label12.Name = "label12";
             label12.Padding = new Padding(0, 0, 0, 10);
-            label12.Size = new Size(92, 35);
+            label12.Size = new Size(114, 42);
             label12.TabIndex = 4;
             label12.Text = "discipline";
             // 
@@ -472,7 +472,7 @@
             panel4.Controls.Add(label8);
             panel4.Controls.Add(label9);
             panel4.Dock = DockStyle.Fill;
-            panel4.Location = new Point(732, 30);
+            panel4.Location = new Point(732, 37);
             panel4.Name = "panel4";
             panel4.RightToLeft = RightToLeft.No;
             panel4.Size = new Size(227, 225);
@@ -495,12 +495,12 @@
             // 
             label8.AutoSize = true;
             label8.Dock = DockStyle.Top;
-            label8.Location = new Point(0, 35);
+            label8.Location = new Point(0, 42);
             label8.Margin = new Padding(5, 0, 5, 0);
             label8.MaximumSize = new Size(193, 0);
             label8.Name = "label8";
             label8.Padding = new Padding(0, 0, 0, 10);
-            label8.Size = new Size(75, 35);
+            label8.Size = new Size(93, 42);
             label8.TabIndex = 3;
             label8.Text = "teacher";
             // 
@@ -513,7 +513,7 @@
             label9.MaximumSize = new Size(193, 0);
             label9.Name = "label9";
             label9.Padding = new Padding(0, 0, 0, 10);
-            label9.Size = new Size(92, 35);
+            label9.Size = new Size(114, 42);
             label9.TabIndex = 4;
             label9.Text = "discipline";
             // 
@@ -525,7 +525,7 @@
             panel3.Controls.Add(label5);
             panel3.Controls.Add(label6);
             panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(498, 30);
+            panel3.Location = new Point(498, 37);
             panel3.Name = "panel3";
             panel3.RightToLeft = RightToLeft.No;
             panel3.Size = new Size(227, 225);
@@ -548,12 +548,12 @@
             // 
             label5.AutoSize = true;
             label5.Dock = DockStyle.Top;
-            label5.Location = new Point(0, 35);
+            label5.Location = new Point(0, 42);
             label5.Margin = new Padding(5, 0, 5, 0);
             label5.MaximumSize = new Size(193, 0);
             label5.Name = "label5";
             label5.Padding = new Padding(0, 0, 0, 10);
-            label5.Size = new Size(75, 35);
+            label5.Size = new Size(93, 42);
             label5.TabIndex = 3;
             label5.Text = "teacher";
             // 
@@ -566,7 +566,7 @@
             label6.MaximumSize = new Size(193, 0);
             label6.Name = "label6";
             label6.Padding = new Padding(0, 0, 0, 10);
-            label6.Size = new Size(92, 35);
+            label6.Size = new Size(114, 42);
             label6.TabIndex = 4;
             label6.Text = "discipline";
             // 
@@ -578,7 +578,7 @@
             panel2.Controls.Add(label2);
             panel2.Controls.Add(label3);
             panel2.Dock = DockStyle.Fill;
-            panel2.Location = new Point(264, 30);
+            panel2.Location = new Point(264, 37);
             panel2.Name = "panel2";
             panel2.RightToLeft = RightToLeft.No;
             panel2.Size = new Size(227, 225);
@@ -601,12 +601,12 @@
             // 
             label2.AutoSize = true;
             label2.Dock = DockStyle.Top;
-            label2.Location = new Point(0, 35);
+            label2.Location = new Point(0, 42);
             label2.Margin = new Padding(5, 0, 5, 0);
             label2.MaximumSize = new Size(193, 0);
             label2.Name = "label2";
             label2.Padding = new Padding(0, 0, 0, 10);
-            label2.Size = new Size(75, 35);
+            label2.Size = new Size(93, 42);
             label2.TabIndex = 3;
             label2.Text = "teacher";
             // 
@@ -619,14 +619,14 @@
             label3.MaximumSize = new Size(193, 0);
             label3.Name = "label3";
             label3.Padding = new Padding(0, 0, 0, 10);
-            label3.Size = new Size(92, 35);
+            label3.Size = new Size(114, 42);
             label3.TabIndex = 4;
             label3.Text = "discipline";
             // 
             // first
             // 
             first.Dock = DockStyle.Fill;
-            first.Location = new Point(4, 27);
+            first.Location = new Point(4, 34);
             first.Name = "first";
             first.Size = new Size(19, 231);
             first.TabIndex = 26;
@@ -635,7 +635,7 @@
             // 
             // FormSchedule
             // 
-            AutoScaleDimensions = new SizeF(11F, 25F);
+            AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1432, 591);
@@ -677,7 +677,7 @@
         private Label labelCabinet;
         private Label labelTeacher;
         private Label labelDiscipline;
-        private Label labelDate;
+        private Label labelDate1;
         private TableLayoutPanel tableLayoutPanelSchedule;
         private Panel panel6;
         private Label label13;
@@ -699,11 +699,11 @@
         private Label label1;
         private Label label2;
         private Label label3;
-        private Label label20;
-        private Label label19;
-        private Label label18;
-        private Label label17;
-        private Label label16;
+        private Label labelDate6;
+        private Label labelDate5;
+        private Label labelDate4;
+        private Label labelDate3;
+        private Label labelDate2;
         private Label first;
         private Label second;
         private Label third;

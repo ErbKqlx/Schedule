@@ -18,7 +18,7 @@ namespace Schedule_project
     {
         private IApplication _application;
         private IWorkbook _workbook;
-        private IWorksheet _worksheet;
+        private IWorksheet[] _worksheet;
 
         private ScheduleContext? _db;
         private short _id;
@@ -29,7 +29,11 @@ namespace Schedule_project
             InitializeComponent();
             _application = application;
             _workbook = workbook;
-            _worksheet = _workbook.Worksheets[0];
+            foreach (var sheet in _workbook.Worksheets)
+            {
+                _worksheet.Append(sheet);
+            }
+            
         }
 
         protected override void OnLoad(EventArgs e)
@@ -42,121 +46,124 @@ namespace Schedule_project
             _db.Buildings.Load();
             _db.Cabinets.Load();
 
-            var range = _worksheet.Range["B3:C14"];
-            var group = $"{range["B3"].Text}";
-            var date = _worksheet.Name.Split(' ')[0] + ".2025";
-            for (var i = 0; i < 12; i+=2)
+            foreach (var sheet in _worksheet)
             {
-                //пара
-                var pair = range[$"B{4 + i}"].Text;
-                if (pair == null) { continue; }
-
-                var number = range[$"A{4 + i}"].DisplayText;
-
-                //дисциплина с преподавателем
-                var regex = new Regex(@"\d", RegexOptions.RightToLeft);
-                var discipline = pair.Split('\n')[0];
-                string? code = null;
-                string name = "";
-                if (regex.IsMatch(discipline))
+                var range = sheet.Range["B3:C14"];
+                var group = $"{range["B3"].Text}";
+                var date = sheet.Name.Split(' ')[0] + ".2025";
+                for (var i = 0; i < 12; i += 2)
                 {
-                    code = discipline.Substring(0, regex.Match(discipline).Index + 1);
-                    name = discipline.Substring(regex.Match(discipline).Index + 2);
-                }
-                else
-                {
-                    name = discipline;
-                }
-                
-                var teacherName = pair.Split('\n')[1];
+                    //пара
+                    var pair = range[$"B{4 + i}"].Text;
+                    if (pair == null) { continue; }
 
-                Discipline element;
-                if (code != null)
-                {
-                    element = _db.Disciplines.FirstOrDefault(v => v.Code == code);
-                    if (element == null)
+                    var number = range[$"A{4 + i}"].DisplayText;
+
+                    //дисциплина с преподавателем
+                    var regex = new Regex(@"\d", RegexOptions.RightToLeft);
+                    var discipline = pair.Split('\n')[0];
+                    string? code = null;
+                    string name = "";
+                    if (regex.IsMatch(discipline))
                     {
-                        element = new Discipline { Code = code, Name = name };
-                        _db.Disciplines.Add(element);
+                        code = discipline.Substring(0, regex.Match(discipline).Index + 1);
+                        name = discipline.Substring(regex.Match(discipline).Index + 2);
+                    }
+                    else
+                    {
+                        name = discipline;
+                    }
+
+                    var teacherName = pair.Split('\n')[1];
+
+                    Discipline element;
+                    if (code != null)
+                    {
+                        element = _db.Disciplines.FirstOrDefault(v => v.Code == code);
+                        if (element == null)
+                        {
+                            element = new Discipline { Code = code, Name = name };
+                            _db.Disciplines.Add(element);
+                        }
+                    }
+                    else
+                    {
+                        element = _db.Disciplines.FirstOrDefault(v => v.Name == name);
+                        if (element == null)
+                        {
+                            element = new Discipline { Name = name };
+                            _db.Disciplines.Add(element);
+                        }
+                    }
+                    _db.SaveChanges();
+
+                    var disciplineTeacher = new DisciplinesTeacher
+                    {
+                        IdDiscipline = element.Id,
+                        IdTeacher = _db.Teachers.Local.FirstOrDefault(v => v.ShortName == teacherName).Id
+                    };
+
+                    if (_db.DisciplinesTeachers.FirstOrDefault
+                        (
+                            v => v.IdDiscipline == disciplineTeacher.IdDiscipline
+                            && v.IdTeacher == disciplineTeacher.IdTeacher
+                        ) == null)
+                    {
+                        _db.DisciplinesTeachers.Add(disciplineTeacher);
+                        _db.SaveChanges();
+                    }
+
+
+                    _db.Disciplines.Load();
+                    _db.DisciplinesTeachers.Load();
+
+                    //кабинет с корпусом
+                    var cabinet = range[$"C{4 + i}"].Text;
+                    var building = cabinet.Split('\n')[0];
+                    cabinet = cabinet.Split('\n')[1];
+                    cabinet = cabinet.Substring(cabinet.IndexOf(' ') + 1);
+
+                    Schedule schedule = new Schedule
+                    {
+                        IdGroup = _db.Groups.Local.FirstOrDefault(v => v.Name == group).Id,
+                        IdCabinet = _db.Cabinets.Local.FirstOrDefault(v =>
+                            v.Number == short.Parse(cabinet)
+                            && v.IdBuilding == _db.Buildings.Local.FirstOrDefault(i => i.ShortName == building).Id
+                            ).Id,
+                        Number = short.Parse(number),
+                        IdDisciplineTeacher = _db.DisciplinesTeachers.Local.FirstOrDefault(v =>
+                            v.IdDiscipline == _db.Disciplines.Local.FirstOrDefault(i => i.Code == code).Id
+                            && v.IdTeacher == _db.Teachers.Local.FirstOrDefault(v => v.ShortName == teacherName).Id).Id,
+                        Date = DateOnly.Parse(date)
+                    };
+
+                    if (_db.Schedules.FirstOrDefault
+                        (
+                            v => v.IdGroup == schedule.IdGroup
+                            && v.IdCabinet == schedule.IdCabinet
+                            && v.Number == schedule.Number
+                            && v.IdDisciplineTeacher == schedule.IdDisciplineTeacher
+                            && v.Date == schedule.Date
+                        ) == null)
+                    {
+                        _db.Schedules.Add(schedule);
+                        _db.SaveChanges();
                     }
                 }
-                else
-                {
-                    element = _db.Disciplines.FirstOrDefault(v => v.Name == name);
-                    if (element == null)
-                    {
-                        element = new Discipline { Name = name };
-                        _db.Disciplines.Add(element);
-                    }
-                }
-                _db.SaveChanges();
-
-                var disciplineTeacher = new DisciplinesTeacher
-                {
-                    IdDiscipline = element.Id,
-                    IdTeacher = _db.Teachers.Local.FirstOrDefault(v => v.ShortName == teacherName).Id
-                };
-
-                if (_db.DisciplinesTeachers.FirstOrDefault
-                    (
-                        v => v.IdDiscipline == disciplineTeacher.IdDiscipline
-                        && v.IdTeacher == disciplineTeacher.IdTeacher
-                    ) == null)
-                {
-                    _db.DisciplinesTeachers.Add(disciplineTeacher);
-                    _db.SaveChanges();
-                }
-                
-
-                _db.Disciplines.Load();
-                _db.DisciplinesTeachers.Load();
-
-                //кабинет с корпусом
-                var cabinet = range[$"C{4 + i}"].Text;
-                var building = cabinet.Split('\n')[0];
-                cabinet = cabinet.Split('\n')[1];
-                cabinet = cabinet.Substring(cabinet.IndexOf(' ')+1);
-
-                Schedule schedule = new Schedule
-                {
-                    IdGroup = _db.Groups.Local.FirstOrDefault(v => v.Name == group).Id,
-                    IdCabinet = _db.Cabinets.Local.FirstOrDefault(v =>
-                        v.Number == short.Parse(cabinet)
-                        && v.IdBuilding == _db.Buildings.Local.FirstOrDefault(i => i.ShortName == building).Id
-                        ).Id,
-                    Number = short.Parse(number),
-                    IdDisciplineTeacher = _db.DisciplinesTeachers.Local.FirstOrDefault(v =>
-                        v.IdDiscipline == _db.Disciplines.Local.FirstOrDefault(i => i.Code == code).Id
-                        && v.IdTeacher == _db.Teachers.Local.FirstOrDefault(v => v.ShortName == teacherName).Id).Id,
-                    Date = DateOnly.Parse(date)
-                };
-
-                if (_db.Schedules.FirstOrDefault
-                    (
-                        v => v.IdGroup == schedule.IdGroup
-                        && v.IdCabinet == schedule.IdCabinet
-                        && v.Number == schedule.Number
-                        && v.IdDisciplineTeacher == schedule.IdDisciplineTeacher
-                        && v.Date == schedule.Date
-                    ) == null)
-                {
-                    _db.Schedules.Add(schedule);
-                    _db.SaveChanges();
-                }
-                
-                
             }
+            
 
             //cabinets = range[$"C4"].Text.Split('\n');
             //MessageBox.Show(cabinets[0]);
             
             _db.Schedules.Load();
-            
-            
 
-            labelDate.Text = _worksheet.Name;
+            var schedules = _db.Schedules.Local
+                .Where(v => 
+                    v.Date >= DateOnly.Parse(_worksheet[0].Name) 
+                    && v.Date <= DateOnly.Parse(_worksheet[_worksheet.Length - 1].Name))
+                .ToList();
 
-            var schedules = _db.Schedules.Local.ToList();
             foreach (var schedule in schedules)
             {
                 var idSchedule = schedule.Id;
@@ -165,11 +172,8 @@ namespace Schedule_project
                 var buildingCabinet = _db.Buildings.FirstOrDefault(v => v.Id == cabinet.IdBuilding).ShortName + " " + cabinet.Number + " каб.";
                 var number = schedule.Number;
                 var disciplinesTeacher = _db.DisciplinesTeachers.FirstOrDefault(v => v.Id == schedule.IdDisciplineTeacher);
-                var discipline = _db.Disciplines.FirstOrDefault(v => v.Id == disciplinesTeacher.IdDiscipline);
-                var disciplineName = $"{discipline.Code} {discipline.Name}";
-                var teacher = _db.Teachers.FirstOrDefault(v => v.Id == disciplinesTeacher.IdTeacher);
-                var teacherName = $"{teacher.Surname} {teacher.Name} {teacher.Patronymic}";
-                //label6.Text = schedule.Date.ToString();
+                var disciplineName = _db.Disciplines.FirstOrDefault(v => v.Id == disciplinesTeacher.IdDiscipline).CodeName;
+                var teacherName = _db.Teachers.FirstOrDefault(v => v.Id == disciplinesTeacher.IdTeacher).FullName;
                 CreatePanel
                 (
                     idSchedule,
