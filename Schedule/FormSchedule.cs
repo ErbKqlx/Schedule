@@ -29,9 +29,9 @@ namespace Schedule_project
             InitializeComponent();
             _application = application;
             _workbook = workbook;
-            foreach (var sheet in _workbook.Worksheets)
+            for (var i = 0; i < _workbook.Worksheets.Count; i++)
             {
-                _worksheet.Append(sheet);
+                _worksheet[i] = _workbook.Worksheets[i];
             }
             
         }
@@ -46,6 +46,7 @@ namespace Schedule_project
             _db.Buildings.Load();
             _db.Cabinets.Load();
 
+            short column = 1;
             foreach (var sheet in _worksheet)
             {
                 var range = sheet.Range["B3:C14"];
@@ -150,6 +151,31 @@ namespace Schedule_project
                         _db.SaveChanges();
                     }
                 }
+
+                var schedules = _db.Schedules.Local.Where(v => v.Date == DateOnly.Parse(date)).ToList();
+
+                foreach (var schedule in schedules)
+                {
+                    var idSchedule = schedule.Id;
+                    var groupName = _db.Groups.FirstOrDefault(v => v.Id == schedule.IdGroup).Name;
+                    var cabinet = _db.Cabinets.FirstOrDefault(v => v.Id == schedule.IdCabinet);
+                    var buildingCabinet = _db.Buildings.FirstOrDefault(v => v.Id == cabinet.IdBuilding).ShortName + " " + cabinet.Number + " каб.";
+                    var number = schedule.Number;
+                    var disciplinesTeacher = _db.DisciplinesTeachers.FirstOrDefault(v => v.Id == schedule.IdDisciplineTeacher);
+                    var disciplineName = _db.Disciplines.FirstOrDefault(v => v.Id == disciplinesTeacher.IdDiscipline).CodeName;
+                    var teacherName = _db.Teachers.FirstOrDefault(v => v.Id == disciplinesTeacher.IdTeacher).FullName;
+                    CreatePanel
+                    (
+                        idSchedule,
+                        groupName,
+                        buildingCabinet,
+                        disciplineName,
+                        teacherName,
+                        number,
+                        column
+                    );
+                }
+                column++;
             }
             
 
@@ -158,32 +184,14 @@ namespace Schedule_project
             
             _db.Schedules.Load();
 
-            var schedules = _db.Schedules.Local
-                .Where(v => 
-                    v.Date >= DateOnly.Parse(_worksheet[0].Name) 
-                    && v.Date <= DateOnly.Parse(_worksheet[_worksheet.Length - 1].Name))
-                .ToList();
+            
 
-            foreach (var schedule in schedules)
-            {
-                var idSchedule = schedule.Id;
-                var groupName = _db.Groups.FirstOrDefault(v => v.Id == schedule.IdGroup).Name;
-                var cabinet = _db.Cabinets.FirstOrDefault(v => v.Id == schedule.IdCabinet);
-                var buildingCabinet = _db.Buildings.FirstOrDefault(v => v.Id == cabinet.IdBuilding).ShortName + " " + cabinet.Number + " каб.";
-                var number = schedule.Number;
-                var disciplinesTeacher = _db.DisciplinesTeachers.FirstOrDefault(v => v.Id == schedule.IdDisciplineTeacher);
-                var disciplineName = _db.Disciplines.FirstOrDefault(v => v.Id == disciplinesTeacher.IdDiscipline).CodeName;
-                var teacherName = _db.Teachers.FirstOrDefault(v => v.Id == disciplinesTeacher.IdTeacher).FullName;
-                CreatePanel
-                (
-                    idSchedule,
-                    groupName,
-                    buildingCabinet,
-                    disciplineName,
-                    teacherName,
-                    number
-                );
-            }
+            labelDate1.Text = _worksheet[0].Name;
+            labelDate2.Text = _worksheet[1].Name;
+            labelDate3.Text = _worksheet[2].Name;
+            labelDate4.Text = _worksheet[3].Name;
+            labelDate5.Text = _worksheet[4].Name;
+            labelDate6.Text = _worksheet[5].Name;
 
             var updateMenuItem = new ToolStripMenuItem("Редактировать");
             updateMenuItem.Click += UpdateMenuItem_Click;
@@ -265,7 +273,7 @@ namespace Schedule_project
 
         }
 
-        private void CreatePanel(short id, string groupName, string buildingCabinet, string disciplineName, string teacherName, short number)
+        private void CreatePanel(short id, string groupName, string buildingCabinet, string disciplineName, string teacherName, short number, short column)
         {
             var labelCabinet = new Label();
             var labelDiscipline = new Label();
@@ -331,7 +339,7 @@ namespace Schedule_project
             panel.TabIndex = 0;
             panel.MouseClick += Panel_MouseClick;
 
-            tableLayoutPanelSchedule.Controls.Add(panel, 1, number);
+            tableLayoutPanelSchedule.Controls.Add(panel, column, number);
             //panel.ContextMenuStrip = contextMenuStrip1;
         }
 
