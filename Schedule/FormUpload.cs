@@ -12,7 +12,6 @@ namespace Schedule_project
         public FormUpload()
         {
             InitializeComponent();
-
         }
 
         private void ButtonUpload_Click(object sender, EventArgs e)
@@ -67,8 +66,9 @@ namespace Schedule_project
 
                 var formSchedule = new FormSchedule(application, workbook);
                 this.Owner = formSchedule;
-                this.Hide();
+
                 formSchedule.Show();
+                this.Hide();
             }
         }
 

@@ -342,7 +342,5 @@ namespace Schedule_project
             tableLayoutPanelSchedule.Controls.Add(panel, column, number);
             //panel.ContextMenuStrip = contextMenuStrip1;
         }
-
-        
     }
 }
