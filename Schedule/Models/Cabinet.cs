@@ -7,7 +7,7 @@ public partial class Cabinet
 {
     public short Id { get; set; }
 
-    public short Number { get; set; }
+    public string Number { get; set; }
 
     public short IdBuilding { get; set; }
 

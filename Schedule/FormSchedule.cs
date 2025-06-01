@@ -29,6 +29,7 @@ namespace Schedule_project
             InitializeComponent();
             _application = application;
             _workbook = workbook;
+            _worksheet = new IWorksheet[_workbook.Worksheets.Count];
             for (var i = 0; i < _workbook.Worksheets.Count; i++)
             {
                 _worksheet[i] = _workbook.Worksheets[i];
@@ -122,13 +123,12 @@ namespace Schedule_project
                     var cabinet = range[$"C{4 + i}"].Text;
                     var building = cabinet.Split('\n')[0];
                     cabinet = cabinet.Split('\n')[1];
-                    cabinet = cabinet.Substring(cabinet.IndexOf(' ') + 1);
 
                     Schedule schedule = new Schedule
                     {
                         IdGroup = _db.Groups.Local.FirstOrDefault(v => v.Name == group).Id,
                         IdCabinet = _db.Cabinets.Local.FirstOrDefault(v =>
-                            v.Number == short.Parse(cabinet)
+                            v.Number == cabinet
                             && v.IdBuilding == _db.Buildings.Local.FirstOrDefault(i => i.ShortName == building).Id
                             ).Id,
                         Number = short.Parse(number),
@@ -159,7 +159,7 @@ namespace Schedule_project
                     var idSchedule = schedule.Id;
                     var groupName = _db.Groups.FirstOrDefault(v => v.Id == schedule.IdGroup).Name;
                     var cabinet = _db.Cabinets.FirstOrDefault(v => v.Id == schedule.IdCabinet);
-                    var buildingCabinet = _db.Buildings.FirstOrDefault(v => v.Id == cabinet.IdBuilding).ShortName + " " + cabinet.Number + " каб.";
+                    var buildingCabinet = _db.Buildings.FirstOrDefault(v => v.Id == cabinet.IdBuilding).ShortName + " " + cabinet.Number;
                     var number = schedule.Number;
                     var disciplinesTeacher = _db.DisciplinesTeachers.FirstOrDefault(v => v.Id == schedule.IdDisciplineTeacher);
                     var disciplineName = _db.Disciplines.FirstOrDefault(v => v.Id == disciplinesTeacher.IdDiscipline).CodeName;

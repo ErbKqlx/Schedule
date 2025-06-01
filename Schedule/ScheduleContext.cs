@@ -59,7 +59,9 @@ public partial class ScheduleContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.IdBuilding).HasColumnName("id_building");
-            entity.Property(e => e.Number).HasColumnName("number");
+            entity.Property(e => e.Number)
+                .HasMaxLength(255)
+                .HasColumnName("number");
 
             entity.HasOne(d => d.IdBuildingNavigation).WithMany(p => p.Cabinets)
                 .HasForeignKey(d => d.IdBuilding)
