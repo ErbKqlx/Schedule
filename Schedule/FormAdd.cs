@@ -45,9 +45,6 @@ namespace Schedule_project
             comboBoxCabinets.DataSource = _db.Cabinets.Local.ToBindingList();
             comboBoxCabinets.DisplayMember = "Number";
             comboBoxCabinets.ValueMember = "Id";
-
-
-
         }
     }
 }

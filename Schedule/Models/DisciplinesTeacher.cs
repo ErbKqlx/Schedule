@@ -9,11 +9,11 @@ public partial class DisciplinesTeacher
 
     public short IdDiscipline { get; set; }
 
-    public short IdTeacher { get; set; }
+    public short? IdTeacher { get; set; }
 
     public virtual Discipline IdDisciplineNavigation { get; set; } = null!;
 
-    public virtual Teacher IdTeacherNavigation { get; set; } = null!;
+    public virtual Teacher? IdTeacherNavigation { get; set; }
 
     public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
 }

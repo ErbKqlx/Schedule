@@ -150,12 +150,13 @@
             // 
             // labelCabinet
             // 
+            labelCabinet.AutoSize = true;
             labelCabinet.Dock = DockStyle.Bottom;
             labelCabinet.Location = new Point(0, 198);
             labelCabinet.Margin = new Padding(5, 0, 5, 0);
             labelCabinet.Name = "labelCabinet";
             labelCabinet.RightToLeft = RightToLeft.No;
-            labelCabinet.Size = new Size(225, 25);
+            labelCabinet.Size = new Size(74, 25);
             labelCabinet.TabIndex = 1;
             labelCabinet.Text = "cabinet";
             labelCabinet.TextAlign = ContentAlignment.BottomRight;
@@ -197,7 +198,6 @@
             labelDate1.TabIndex = 15;
             labelDate1.Text = "date";
             labelDate1.TextAlign = ContentAlignment.MiddleCenter;
-            labelDate1.Visible = false;
             // 
             // tableLayoutPanelSchedule
             // 
@@ -304,7 +304,6 @@
             labelDate6.TabIndex = 25;
             labelDate6.Text = "date";
             labelDate6.TextAlign = ContentAlignment.MiddleCenter;
-            labelDate6.Visible = false;
             // 
             // labelDate5
             // 
@@ -317,7 +316,6 @@
             labelDate5.TabIndex = 24;
             labelDate5.Text = "date";
             labelDate5.TextAlign = ContentAlignment.MiddleCenter;
-            labelDate5.Visible = false;
             // 
             // labelDate4
             // 
@@ -330,7 +328,6 @@
             labelDate4.TabIndex = 23;
             labelDate4.Text = "date";
             labelDate4.TextAlign = ContentAlignment.MiddleCenter;
-            labelDate4.Visible = false;
             // 
             // labelDate3
             // 
@@ -343,7 +340,6 @@
             labelDate3.TabIndex = 22;
             labelDate3.Text = "date";
             labelDate3.TextAlign = ContentAlignment.MiddleCenter;
-            labelDate3.Visible = false;
             // 
             // labelDate2
             // 
@@ -356,7 +352,6 @@
             labelDate2.TabIndex = 21;
             labelDate2.Text = "date";
             labelDate2.TextAlign = ContentAlignment.MiddleCenter;
-            labelDate2.Visible = false;
             // 
             // panel6
             // 

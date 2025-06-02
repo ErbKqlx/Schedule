@@ -34,7 +34,6 @@ namespace Schedule_project
             {
                 _worksheet[i] = _workbook.Worksheets[i];
             }
-            
         }
 
         protected override void OnLoad(EventArgs e)
@@ -52,7 +51,7 @@ namespace Schedule_project
             {
                 var range = sheet.Range["B3:C14"];
                 var group = $"{range["B3"].Text}";
-                var date = sheet.Name.Split(' ')[0] + ".2025";
+                var date = sheet.Range["J1"].Text.Split(' ')[2];
                 for (var i = 0; i < 12; i += 2)
                 {
                     //пара
@@ -64,8 +63,11 @@ namespace Schedule_project
                     //дисциплина с преподавателем
                     var regexCode = new Regex(@"(?<=\.\d+)\d\s");
                     var discipline = pair.Split('\n')[0];
+                    var teacherName = pair.Split('\n')[1];
+
                     string? code = null;
                     string name = "";
+                    
                     if (regexCode.IsMatch(discipline))
                     {
                         code = discipline.Substring(0, regexCode.Match(discipline).Index + 1);
@@ -75,8 +77,6 @@ namespace Schedule_project
                     {
                         name = discipline;
                     }
-
-                    var teacherName = pair.Split('\n')[1];
 
                     Discipline element;
                     if (code != null)
@@ -290,10 +290,10 @@ namespace Schedule_project
             labelCabinet.Margin = new Padding(5, 0, 5, 0);
             labelCabinet.Name = "labelCabinet";
             labelCabinet.RightToLeft = RightToLeft.No;
-            labelCabinet.Size = new Size(193, 25);
             labelCabinet.TabIndex = 1;
             labelCabinet.Text = buildingCabinet;
-            labelCabinet.TextAlign = ContentAlignment.BottomRight;
+            labelCabinet.AutoSize = true;
+            labelCabinet.MaximumSize = new Size(200, 50);
             // 
             // labelTeacher
             // 

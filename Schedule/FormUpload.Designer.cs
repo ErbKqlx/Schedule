@@ -37,7 +37,6 @@
             // 
             // buttonUpload
             // 
-            buttonUpload.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             buttonUpload.BackColor = Color.White;
             buttonUpload.FlatStyle = FlatStyle.Flat;
             buttonUpload.Location = new Point(55, 100);
