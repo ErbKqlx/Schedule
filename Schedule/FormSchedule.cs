@@ -53,7 +53,7 @@ namespace Schedule_project
             short column = 1;
             foreach (var sheet in _worksheet)
             {
-                var range = sheet.Range["A3:DA14"];
+                var range = sheet.Range["A3:G14"];
                 var date = sheet.Range["J1"].Text.Split(' ')[2];
                 for (var i = 1; i < range.Columns.Length; i+=2)
                 {
@@ -82,8 +82,18 @@ namespace Schedule_project
                         var discipline = pair.Substring(0, pair.LastIndexOf('\n'));
                         var teacherName = pair.Substring(pair.LastIndexOf('\n')+1);
 
+                        var teacher = _db.Teachers.Local.FirstOrDefault(v => v.ShortName == teacherName);
+                        if (teacher == null)
+                        {
+                            discipline = pair;
+                            teacherName = null;
+                        }
+
+
                         string? code = null;
                         string name = "";
+
+                        
 
                         if (regexCode.IsMatch(discipline))
                         {
@@ -104,6 +114,7 @@ namespace Schedule_project
                                 element = new Discipline { Code = code, Name = name };
                                 _db.Disciplines.Add(element);
                             }
+
                         }
                         else
                         {
@@ -117,11 +128,11 @@ namespace Schedule_project
                         _db.SaveChanges();
 
                         
-                        
+
                         var disciplineTeacher = new DisciplinesTeacher
                         {
                             IdDiscipline = element.Id,
-                            IdTeacher = _db.Teachers.Local.FirstOrDefault(v => v.ShortName == teacherName).Id
+                            IdTeacher = teacher?.Id
                         };
 
                         if (_db.DisciplinesTeachers.FirstOrDefault
@@ -141,7 +152,7 @@ namespace Schedule_project
                         //кабинет с корпусом
                         var cabinet = range.Columns[i+1].Rows[j].Text;
                         string? building;
-                        if (cabinet != "ДТиО" && cabinet != "УПМ")
+                        if (cabinet != "ДТиО" && cabinet != "УПМ" && cabinet != null)
                         {
                             building = cabinet.Split('\n')[0];
                             cabinet = cabinet.Split('\n')[1];
@@ -157,12 +168,12 @@ namespace Schedule_project
                             IdGroup = _db.Groups.Local.FirstOrDefault(v => v.Name == group).Id,
                             IdCabinet = _db.Cabinets.Local.FirstOrDefault(v =>
                                 v.Number == cabinet
-                                && v.IdBuilding == _db.Buildings.Local.FirstOrDefault(i => i.ShortName == building).Id
-                                ).Id,
+                                && v.IdBuilding == _db.Buildings.Local.FirstOrDefault(i => i.ShortName == building)?.Id
+                                )?.Id,
                             Number = short.Parse(number),
                             IdDisciplineTeacher = _db.DisciplinesTeachers.Local.FirstOrDefault(v =>
                                 v.IdDiscipline == _db.Disciplines.Local.FirstOrDefault(i => i.Code == code && i.Name == name).Id
-                                && v.IdTeacher == _db.Teachers.Local.FirstOrDefault(v => v.ShortName == teacherName).Id).Id,
+                                && v.IdTeacher == _db.Teachers.Local.FirstOrDefault(v => v.ShortName == teacherName)?.Id).Id,
                             Date = DateOnly.Parse(date)
                         };
 
