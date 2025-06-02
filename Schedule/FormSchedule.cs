@@ -22,8 +22,10 @@ namespace Schedule_project
 
         private ScheduleContext? _db;
         private short _id;
-
         private Panel? selectedPanel;
+
+        public string group = "ЭРО-24";
+        
         public FormSchedule(IApplication application, IWorkbook workbook)
         {
             InitializeComponent();
@@ -67,7 +69,7 @@ namespace Schedule_project
 
                     string? code = null;
                     string name = "";
-                    
+
                     if (regexCode.IsMatch(discipline))
                     {
                         code = discipline.Substring(0, regexCode.Match(discipline).Index + 1);
@@ -177,14 +179,14 @@ namespace Schedule_project
                 }
                 column++;
             }
-            
+
 
             //cabinets = range[$"C4"].Text.Split('\n');
             //MessageBox.Show(cabinets[0]);
-            
+
             _db.Schedules.Load();
 
-            
+
 
             labelDate1.Text = _worksheet[0].Name;
             labelDate2.Text = _worksheet[1].Name;
@@ -252,6 +254,7 @@ namespace Schedule_project
         {
             base.OnClosing(e);
 
+            _db.Database.ExecuteSqlRaw("TRUNCATE TABLE schedules");
             _db?.Dispose();
             _db = null;
         }
@@ -293,7 +296,7 @@ namespace Schedule_project
             labelCabinet.TabIndex = 1;
             labelCabinet.Text = buildingCabinet;
             labelCabinet.AutoSize = true;
-            labelCabinet.MaximumSize = new Size(200, 50);
+            labelCabinet.MaximumSize = new Size(180, 50);
             // 
             // labelTeacher
             // 
@@ -341,6 +344,19 @@ namespace Schedule_project
 
             tableLayoutPanelSchedule.Controls.Add(panel, column, number);
             //panel.ContextMenuStrip = contextMenuStrip1;
+        }
+
+        private void ButtonCheckWorkload_Click(object sender, EventArgs e)
+        {
+            //var groups = _db.Groups.Local.Select(v => v.Id);
+
+            //foreach (var group in groups)
+            //{
+            //    var schedules = _db.Schedules.Local
+            //        .Select(v => new { v.Id, v.IdGroup, v.Date })
+            //        .Where(v => v.IdGroup == group && v.Date.)
+            //        .Count();
+            //}
         }
     }
 }

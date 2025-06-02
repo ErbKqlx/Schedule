@@ -35,6 +35,7 @@
             comboBoxGroups = new ComboBox();
             buttonAdd = new Button();
             panel13 = new Panel();
+            buttonCheckWorkload = new Button();
             panel1 = new Panel();
             labelCabinet = new Label();
             labelTeacher = new Label();
@@ -123,6 +124,7 @@
             // 
             // panel13
             // 
+            panel13.Controls.Add(buttonCheckWorkload);
             panel13.Controls.Add(buttonAdd);
             panel13.Controls.Add(labelGroup);
             panel13.Controls.Add(comboBoxGroups);
@@ -132,6 +134,17 @@
             panel13.Padding = new Padding(5);
             panel13.Size = new Size(1412, 59);
             panel13.TabIndex = 13;
+            // 
+            // buttonCheckWorkload
+            // 
+            buttonCheckWorkload.BackColor = Color.White;
+            buttonCheckWorkload.Location = new Point(165, 11);
+            buttonCheckWorkload.Name = "buttonCheckWorkload";
+            buttonCheckWorkload.Size = new Size(290, 39);
+            buttonCheckWorkload.TabIndex = 13;
+            buttonCheckWorkload.Text = "Проверить нагрузку по часам";
+            buttonCheckWorkload.UseVisualStyleBackColor = false;
+            buttonCheckWorkload.Click += ButtonCheckWorkload_Click;
             // 
             // panel1
             // 
@@ -705,5 +718,6 @@
         private Label sixth;
         private Label fifth;
         private Label fourth;
+        private Button buttonCheckWorkload;
     }
 }
