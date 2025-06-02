@@ -43,6 +43,8 @@ namespace Schedule_project
             base.OnLoad(e);
             _db = new();
 
+            _db.Database.ExecuteSqlRaw("TRUNCATE TABLE schedule");
+
             _db.Teachers.Load();
             _db.Groups.Load();
             _db.Buildings.Load();
@@ -51,108 +53,134 @@ namespace Schedule_project
             short column = 1;
             foreach (var sheet in _worksheet)
             {
-                var range = sheet.Range["B3:C14"];
-                var group = $"{range["B3"].Text}";
+                var range = sheet.Range["A3:DA14"];
                 var date = sheet.Range["J1"].Text.Split(' ')[2];
-                for (var i = 0; i < 12; i += 2)
+                for (var i = 1; i < range.Columns.Length; i+=2)
                 {
-                    //пара
-                    var pair = range[$"B{4 + i}"].Text;
-                    if (pair == null) { continue; }
-
-                    var number = range[$"A{4 + i}"].DisplayText;
-
-                    //дисциплина с преподавателем
-                    var regexCode = new Regex(@"(?<=\.\d+)\d\s");
-                    var discipline = pair.Split('\n')[0];
-                    var teacherName = pair.Split('\n')[1];
-
-                    string? code = null;
-                    string name = "";
-
-                    if (regexCode.IsMatch(discipline))
+                    var group = range.Columns[i].Rows[0].Text;
+                    if (group == null)
                     {
-                        code = discipline.Substring(0, regexCode.Match(discipline).Index + 1);
-                        name = discipline.Substring(regexCode.Match(discipline).Index + 2);
+                        i--;
+                        continue;
                     }
-                    else
+                    
+                    for (var j = 1; j < range.Rows.Length; j++)
                     {
-                        name = discipline;
-                    }
+                        //пара
+                        var pair = range.Columns[i].Rows[j].Text;
+                        if (pair == null) { continue; }
 
-                    Discipline element;
-                    if (code != null)
-                    {
-                        element = _db.Disciplines.FirstOrDefault(v => v.Code == code && v.Name == name);
-                        if (element == null)
+                        var number = range.Columns[0].Rows[j].DisplayText;
+
+                        if (number == "")
                         {
-                            element = new Discipline { Code = code, Name = name };
-                            _db.Disciplines.Add(element);
+                            number = range.Columns[0].Rows[j-1].DisplayText;
                         }
-                    }
-                    else
-                    {
-                        element = _db.Disciplines.FirstOrDefault(v => v.Name == name);
-                        if (element == null)
+
+                        //дисциплина с преподавателем
+                        var regexCode = new Regex(@"(?<=\.\d+)\d\s");
+                        var discipline = pair.Substring(0, pair.LastIndexOf('\n'));
+                        var teacherName = pair.Substring(pair.LastIndexOf('\n')+1);
+
+                        string? code = null;
+                        string name = "";
+
+                        if (regexCode.IsMatch(discipline))
                         {
-                            element = new Discipline { Name = name };
-                            _db.Disciplines.Add(element);
+                            code = discipline.Substring(0, regexCode.Match(discipline).Index + 1);
+                            name = discipline.Substring(regexCode.Match(discipline).Index + 2);
                         }
-                    }
-                    _db.SaveChanges();
+                        else
+                        {
+                            name = discipline;
+                        }
 
-                    var disciplineTeacher = new DisciplinesTeacher
-                    {
-                        IdDiscipline = element.Id,
-                        IdTeacher = _db.Teachers.Local.FirstOrDefault(v => v.ShortName == teacherName).Id
-                    };
-
-                    if (_db.DisciplinesTeachers.FirstOrDefault
-                        (
-                            v => v.IdDiscipline == disciplineTeacher.IdDiscipline
-                            && v.IdTeacher == disciplineTeacher.IdTeacher
-                        ) == null)
-                    {
-                        _db.DisciplinesTeachers.Add(disciplineTeacher);
+                        Discipline element;
+                        if (code != null)
+                        {
+                            element = _db.Disciplines.FirstOrDefault(v => v.Code == code && v.Name == name);
+                            if (element == null)
+                            {
+                                element = new Discipline { Code = code, Name = name };
+                                _db.Disciplines.Add(element);
+                            }
+                        }
+                        else
+                        {
+                            element = _db.Disciplines.FirstOrDefault(v => v.Name == name);
+                            if (element == null)
+                            {
+                                element = new Discipline { Name = name };
+                                _db.Disciplines.Add(element);
+                            }
+                        }
                         _db.SaveChanges();
-                    }
+
+                        
+                        
+                        var disciplineTeacher = new DisciplinesTeacher
+                        {
+                            IdDiscipline = element.Id,
+                            IdTeacher = _db.Teachers.Local.FirstOrDefault(v => v.ShortName == teacherName).Id
+                        };
+
+                        if (_db.DisciplinesTeachers.FirstOrDefault
+                            (
+                                v => v.IdDiscipline == disciplineTeacher.IdDiscipline
+                                && v.IdTeacher == disciplineTeacher.IdTeacher
+                            ) == null)
+                        {
+                            _db.DisciplinesTeachers.Add(disciplineTeacher);
+                            _db.SaveChanges();
+                        }
 
 
-                    _db.Disciplines.Load();
-                    _db.DisciplinesTeachers.Load();
+                        _db.Disciplines.Load();
+                        _db.DisciplinesTeachers.Load();
 
-                    //кабинет с корпусом
-                    var cabinet = range[$"C{4 + i}"].Text;
-                    var building = cabinet.Split('\n')[0];
-                    cabinet = cabinet.Split('\n')[1];
+                        //кабинет с корпусом
+                        var cabinet = range.Columns[i+1].Rows[j].Text;
+                        string? building;
+                        if (cabinet != "ДТиО" && cabinet != "УПМ")
+                        {
+                            building = cabinet.Split('\n')[0];
+                            cabinet = cabinet.Split('\n')[1];
+                        }
+                        else
+                        {
+                            building = null;
+                            cabinet = null;
+                        }
 
-                    Schedule schedule = new Schedule
-                    {
-                        IdGroup = _db.Groups.Local.FirstOrDefault(v => v.Name == group).Id,
-                        IdCabinet = _db.Cabinets.Local.FirstOrDefault(v =>
-                            v.Number == cabinet
-                            && v.IdBuilding == _db.Buildings.Local.FirstOrDefault(i => i.ShortName == building).Id
-                            ).Id,
-                        Number = short.Parse(number),
-                        IdDisciplineTeacher = _db.DisciplinesTeachers.Local.FirstOrDefault(v =>
-                            v.IdDiscipline == _db.Disciplines.Local.FirstOrDefault(i => i.Code == code && i.Name == name).Id
-                            && v.IdTeacher == _db.Teachers.Local.FirstOrDefault(v => v.ShortName == teacherName).Id).Id,
-                        Date = DateOnly.Parse(date)
-                    };
+                        Schedule schedule = new Schedule
+                        {
+                            IdGroup = _db.Groups.Local.FirstOrDefault(v => v.Name == group).Id,
+                            IdCabinet = _db.Cabinets.Local.FirstOrDefault(v =>
+                                v.Number == cabinet
+                                && v.IdBuilding == _db.Buildings.Local.FirstOrDefault(i => i.ShortName == building).Id
+                                ).Id,
+                            Number = short.Parse(number),
+                            IdDisciplineTeacher = _db.DisciplinesTeachers.Local.FirstOrDefault(v =>
+                                v.IdDiscipline == _db.Disciplines.Local.FirstOrDefault(i => i.Code == code && i.Name == name).Id
+                                && v.IdTeacher == _db.Teachers.Local.FirstOrDefault(v => v.ShortName == teacherName).Id).Id,
+                            Date = DateOnly.Parse(date)
+                        };
 
-                    if (_db.Schedules.FirstOrDefault
-                        (
-                            v => v.IdGroup == schedule.IdGroup
-                            && v.IdCabinet == schedule.IdCabinet
-                            && v.Number == schedule.Number
-                            && v.IdDisciplineTeacher == schedule.IdDisciplineTeacher
-                            && v.Date == schedule.Date
-                        ) == null)
-                    {
-                        _db.Schedules.Add(schedule);
-                        _db.SaveChanges();
+                        if (_db.Schedules.FirstOrDefault
+                            (
+                                v => v.IdGroup == schedule.IdGroup
+                                && v.IdCabinet == schedule.IdCabinet
+                                && v.Number == schedule.Number
+                                && v.IdDisciplineTeacher == schedule.IdDisciplineTeacher
+                                && v.Date == schedule.Date
+                            ) == null)
+                        {
+                            _db.Schedules.Add(schedule);
+                            _db.SaveChanges();
+                        }
                     }
                 }
+                
 
                 var schedules = _db.Schedules.Local.Where(v => v.Date == DateOnly.Parse(date)).ToList();
 
@@ -254,7 +282,6 @@ namespace Schedule_project
         {
             base.OnClosing(e);
 
-            _db.Database.ExecuteSqlRaw("TRUNCATE TABLE schedules");
             _db?.Dispose();
             _db = null;
         }
