@@ -62,14 +62,14 @@ namespace Schedule_project
                     var number = range[$"A{4 + i}"].DisplayText;
 
                     //дисциплина с преподавателем
-                    var regex = new Regex(@"\d", RegexOptions.RightToLeft);
+                    var regexCode = new Regex(@"(?<=\.\d+)\d\s");
                     var discipline = pair.Split('\n')[0];
                     string? code = null;
                     string name = "";
-                    if (regex.IsMatch(discipline))
+                    if (regexCode.IsMatch(discipline))
                     {
-                        code = discipline.Substring(0, regex.Match(discipline).Index + 1);
-                        name = discipline.Substring(regex.Match(discipline).Index + 2);
+                        code = discipline.Substring(0, regexCode.Match(discipline).Index + 1);
+                        name = discipline.Substring(regexCode.Match(discipline).Index + 2);
                     }
                     else
                     {
@@ -81,7 +81,7 @@ namespace Schedule_project
                     Discipline element;
                     if (code != null)
                     {
-                        element = _db.Disciplines.FirstOrDefault(v => v.Code == code);
+                        element = _db.Disciplines.FirstOrDefault(v => v.Code == code && v.Name == name);
                         if (element == null)
                         {
                             element = new Discipline { Code = code, Name = name };
@@ -133,7 +133,7 @@ namespace Schedule_project
                             ).Id,
                         Number = short.Parse(number),
                         IdDisciplineTeacher = _db.DisciplinesTeachers.Local.FirstOrDefault(v =>
-                            v.IdDiscipline == _db.Disciplines.Local.FirstOrDefault(i => i.Code == code).Id
+                            v.IdDiscipline == _db.Disciplines.Local.FirstOrDefault(i => i.Code == code && i.Name == name).Id
                             && v.IdTeacher == _db.Teachers.Local.FirstOrDefault(v => v.ShortName == teacherName).Id).Id,
                         Date = DateOnly.Parse(date)
                     };
