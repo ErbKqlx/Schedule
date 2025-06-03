@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Schedule_project
 {
@@ -25,7 +26,7 @@ namespace Schedule_project
         private Panel? selectedPanel;
 
         public short selectedGroupId;
-        
+
         public FormSchedule(IApplication application, IWorkbook workbook)
         {
             InitializeComponent();
@@ -50,12 +51,11 @@ namespace Schedule_project
             _db.Buildings.Load();
             _db.Cabinets.Load();
 
-            short column = 1;
             foreach (var sheet in _worksheet)
             {
-                var range = sheet.Range["A3:C14"];
+                var range = sheet.Range[$"A3:AK14"];
                 var date = sheet.Range["J1"].Text.Split(' ')[2];
-                for (var i = 1; i < range.Columns.Length; i+=2)
+                for (var i = 1; i < range.Columns.Length; i += 2)
                 {
                     var group = range.Columns[i].Rows[0].Text;
                     if (group == null)
@@ -63,7 +63,7 @@ namespace Schedule_project
                         i--;
                         continue;
                     }
-                    
+
                     for (var j = 1; j < range.Rows.Length; j++)
                     {
                         //пара
@@ -74,13 +74,24 @@ namespace Schedule_project
 
                         if (number == "")
                         {
-                            number = range.Columns[0].Rows[j-1].DisplayText;
+                            number = range.Columns[0].Rows[j - 1].DisplayText;
                         }
 
                         //дисциплина с преподавателем
                         var regexCode = new Regex(@"(?<=\.\d+)\d\s");
-                        var discipline = pair.Substring(0, pair.LastIndexOf('\n'));
-                        var teacherName = pair.Substring(pair.LastIndexOf('\n')+1);
+
+                        string? discipline;
+                        string? teacherName;
+                        if (pair.LastIndexOf('\n') == -1)
+                        {
+                            discipline = pair;
+                            teacherName = null;
+                        }
+                        else
+                        {
+                            discipline = pair.Substring(0, pair.LastIndexOf('\n'));
+                            teacherName = pair.Substring(pair.LastIndexOf('\n') + 1);
+                        }
 
                         var teacher = _db.Teachers.Local.FirstOrDefault(v => v.ShortName == teacherName);
                         if (teacher == null)
@@ -89,11 +100,8 @@ namespace Schedule_project
                             teacherName = null;
                         }
 
-
                         string? code = null;
                         string name = "";
-
-                        
 
                         if (regexCode.IsMatch(discipline))
                         {
@@ -127,7 +135,6 @@ namespace Schedule_project
                         }
                         _db.SaveChanges();
 
-                        
 
                         var disciplineTeacher = new DisciplinesTeacher
                         {
@@ -145,14 +152,13 @@ namespace Schedule_project
                             _db.SaveChanges();
                         }
 
-
                         _db.Disciplines.Load();
                         _db.DisciplinesTeachers.Load();
 
                         //кабинет с корпусом
-                        var cabinet = range.Columns[i+1].Rows[j].Text;
+                        var cabinet = range.Columns[i + 1].Rows[j].Text;
                         string? building;
-                        if (cabinet != "ДТиО" && cabinet != "УПМ" && cabinet != null)
+                        if (cabinet != "ДТиО" && cabinet != "УПМ" && cabinet != "Челюскинцев 13A" && cabinet != null)
                         {
                             building = cabinet.Split('\n')[0];
                             cabinet = cabinet.Split('\n')[1];
@@ -191,57 +197,11 @@ namespace Schedule_project
                         }
                     }
                 }
+
                 
-
-                var schedules = _db.Schedules.Local.Where(v => v.Date == DateOnly.Parse(date)).ToList();
-
-                foreach (var schedule in schedules)
-                {
-                    var idSchedule = schedule.Id;
-                    var groupName = _db.Groups.FirstOrDefault(v => v.Id == schedule.IdGroup).Name;
-                    var cabinet = _db.Cabinets.FirstOrDefault(v => v.Id == schedule.IdCabinet);
-                    string? buildingCabinet = null;
-                    if (cabinet != null)
-                    {
-                        buildingCabinet = _db.Buildings.FirstOrDefault(v => v.Id == cabinet.IdBuilding).ShortName + " " + cabinet.Number;
-                    }
-                    //var buildingCabinet = _db.Buildings.FirstOrDefault(v => v.Id == cabinet.IdBuilding).ShortName + " " + cabinet.Number;
-                    var number = schedule.Number;
-                    var disciplinesTeacher = _db.DisciplinesTeachers.FirstOrDefault(v => v.Id == schedule.IdDisciplineTeacher);
-                    var disciplineName = _db.Disciplines.FirstOrDefault(v => v.Id == disciplinesTeacher.IdDiscipline).CodeName;
-                    var teacher = _db.Teachers.FirstOrDefault(v => v.Id == disciplinesTeacher.IdTeacher);
-                    string? teacherName = null;
-                    if (teacher != null)
-                    {
-                        teacherName = teacher.FullName;
-                    }
-                    bool subgroup = false;
-                    if (Regex.IsMatch(disciplineName, @"п/гр"))
-                    {
-                        subgroup = true;
-                    }
-                    CreatePanel
-                    (
-                        idSchedule,
-                        groupName,
-                        buildingCabinet,
-                        disciplineName,
-                        teacherName,
-                        number,
-                        column,
-                        subgroup
-                    );
-                }
-                column++;
             }
 
-
-            //cabinets = range[$"C4"].Text.Split('\n');
-            //MessageBox.Show(cabinets[0]);
-
             _db.Schedules.Load();
-
-
 
             labelDate1.Text = _worksheet[0].Name;
             labelDate2.Text = _worksheet[1].Name;
@@ -250,38 +210,19 @@ namespace Schedule_project
             labelDate5.Text = _worksheet[4].Name;
             labelDate6.Text = _worksheet[5].Name;
 
-            var updateMenuItem = new ToolStripMenuItem("Редактировать");
-            updateMenuItem.Click += UpdateMenuItem_Click;
             var deleteMenuItem = new ToolStripMenuItem("Удалить");
             deleteMenuItem.Click += DeleteMenuItem_Click;
 
             if (contextMenuStrip1.Items.Count == 0)
             {
-                contextMenuStrip1.Items.AddRange(new[] { updateMenuItem, deleteMenuItem });
+                contextMenuStrip1.Items.AddRange(new[] { deleteMenuItem });
             }
 
             comboBoxGroups.DataSource = _db.Groups.Local.ToBindingList();
             comboBoxGroups.DisplayMember = "Name";
             comboBoxGroups.ValueMember = "Id";
-
-            selectedGroupId = (short)comboBoxGroups.SelectedValue;
-
-        }
-
-        private void ButtonAdd_Click(object sender, EventArgs e)
-        {
-            var formAdd = new FormAdd(_db);
-            DialogResult result = formAdd.ShowDialog(this);
-
-            if (result == DialogResult.Cancel) { return; }
-        }
-
-        private void UpdateMenuItem_Click(object? sender, EventArgs e)
-        {
-            var formAdd = new FormAdd(_db);
-            DialogResult result = formAdd.ShowDialog(this);
-
-            if (result == DialogResult.Cancel) { return; }
+            comboBoxGroups.SelectedIndexChanged += ComboBoxGroups_SelectedIndexChanged;
+            comboBoxGroups.SelectedIndex = 43;
         }
 
         private void DeleteMenuItem_Click(object? sender, EventArgs e)
@@ -397,37 +338,40 @@ namespace Schedule_project
             panel.Size = new Size(195, 199);
             panel.TabIndex = 0;
             panel.MouseClick += Panel_MouseClick;
-
-            var tableLayoutPanel = new TableLayoutPanel();
-            //tableLayoutPanel.Dock = DockStyle.Fill;
-            tableLayoutPanel.ColumnCount = 1;
-            tableLayoutPanel.ColumnStyles.Add(new ColumnStyle());
-            tableLayoutPanel.RowCount = 2;
-            tableLayoutPanel.RowStyles.Add(new RowStyle());
-            tableLayoutPanel.RowStyles.Add(new RowStyle());
-            tableLayoutPanel.Size = new Size(227, 450);
-            tableLayoutPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+            panel.Dock = DockStyle.Fill;
 
             if (subgroup)
             {
                 if (tableLayoutPanelSchedule.GetControlFromPosition(column, number) == null)
                 {
+                    var tableLayoutPanel = new TableLayoutPanel();
+                    //tableLayoutPanel.Dock = DockStyle.Fill;
+                    tableLayoutPanel.ColumnCount = 1;
+                    tableLayoutPanel.ColumnStyles.Add(new ColumnStyle());
+                    tableLayoutPanel.RowCount = 2;
+                    tableLayoutPanel.RowStyles.Add(new RowStyle());
+                    tableLayoutPanel.RowStyles.Add(new RowStyle());
+                    tableLayoutPanel.Size = new Size(227, 450);
+                    tableLayoutPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
                     tableLayoutPanelSchedule.Controls.Add(tableLayoutPanel, column, number);
+                    tableLayoutPanel.Controls.Add(panel);
                 }
-                tableLayoutPanel.Controls.Add(panel);
+                else
+                {
+                    tableLayoutPanelSchedule.GetControlFromPosition(column, number).Controls.Add(panel);
+                }
+
             }
             else
             {
                 tableLayoutPanelSchedule.Controls.Add(panel, column, number);
             }
-            
+
             //panel.ContextMenuStrip = contextMenuStrip1;
         }
 
         private void ButtonCheckWorkload_Click(object sender, EventArgs e)
         {
-            selectedGroupId = 47;
-
             var hours = _db.Schedules.Local
                 .Select(v => new { v.Id, v.IdGroup, v.Date })
                 .Where(v => v.IdGroup == selectedGroupId)
@@ -452,6 +396,66 @@ namespace Schedule_project
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
                 );
+            }
+        }
+
+        private void ComboBoxGroups_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            for (var i = 1; i < tableLayoutPanelSchedule.RowCount; i++)
+            {
+                for (var j = 1; j < tableLayoutPanelSchedule.ColumnCount; j++)
+                {
+                    tableLayoutPanelSchedule.Controls.Remove(tableLayoutPanelSchedule.GetControlFromPosition(j, i));
+                }
+            }
+            
+
+            var item = sender as ComboBox;
+            selectedGroupId = (short)item.SelectedValue;
+
+            short column = 1;
+            var dates = _db.Schedules.Local.Select(v => v.Date).Distinct();
+            foreach (var date in dates)
+            {
+                var schedules = _db.Schedules.Local.Where(v => v.IdGroup == selectedGroupId && v.Date == date).ToList();
+                foreach (var schedule in schedules)
+                {
+                    var idSchedule = schedule.Id;
+                    var groupName = _db.Groups.FirstOrDefault(v => v.Id == schedule.IdGroup).Name;
+                    var cabinet = _db.Cabinets.FirstOrDefault(v => v.Id == schedule.IdCabinet);
+                    string? buildingCabinet = null;
+                    if (cabinet != null)
+                    {
+                        buildingCabinet = _db.Buildings.FirstOrDefault(v => v.Id == cabinet.IdBuilding).ShortName + " " + cabinet.Number;
+                    }
+                    //var buildingCabinet = _db.Buildings.FirstOrDefault(v => v.Id == cabinet.IdBuilding).ShortName + " " + cabinet.Number;
+                    var number = schedule.Number;
+                    var disciplinesTeacher = _db.DisciplinesTeachers.FirstOrDefault(v => v.Id == schedule.IdDisciplineTeacher);
+                    var disciplineName = _db.Disciplines.FirstOrDefault(v => v.Id == disciplinesTeacher.IdDiscipline).CodeName;
+                    var teacher = _db.Teachers.FirstOrDefault(v => v.Id == disciplinesTeacher.IdTeacher);
+                    string? teacherName = null;
+                    if (teacher != null)
+                    {
+                        teacherName = teacher.FullName;
+                    }
+                    bool subgroup = false;
+                    if (Regex.IsMatch(disciplineName, @"п/гр"))
+                    {
+                        subgroup = true;
+                    }
+                    CreatePanel
+                    (
+                        idSchedule,
+                        groupName,
+                        buildingCabinet,
+                        disciplineName,
+                        teacherName,
+                        number,
+                        column,
+                        subgroup
+                    );
+                }
+                column++;
             }
         }
     }

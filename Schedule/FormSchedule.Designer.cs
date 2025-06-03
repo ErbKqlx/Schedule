@@ -33,7 +33,6 @@
             labelGroup = new Label();
             contextMenuStrip1 = new ContextMenuStrip(components);
             comboBoxGroups = new ComboBox();
-            buttonAdd = new Button();
             panel13 = new Panel();
             buttonCheckWorkload = new Button();
             panel1 = new Panel();
@@ -111,21 +110,9 @@
             comboBoxGroups.Size = new Size(133, 33);
             comboBoxGroups.TabIndex = 11;
             // 
-            // buttonAdd
-            // 
-            buttonAdd.BackColor = Color.White;
-            buttonAdd.Location = new Point(4, 11);
-            buttonAdd.Name = "buttonAdd";
-            buttonAdd.Size = new Size(155, 39);
-            buttonAdd.TabIndex = 12;
-            buttonAdd.Text = "Добавить";
-            buttonAdd.UseVisualStyleBackColor = false;
-            buttonAdd.Click += ButtonAdd_Click;
-            // 
             // panel13
             // 
             panel13.Controls.Add(buttonCheckWorkload);
-            panel13.Controls.Add(buttonAdd);
             panel13.Controls.Add(labelGroup);
             panel13.Controls.Add(comboBoxGroups);
             panel13.Dock = DockStyle.Top;
@@ -138,7 +125,7 @@
             // buttonCheckWorkload
             // 
             buttonCheckWorkload.BackColor = Color.White;
-            buttonCheckWorkload.Location = new Point(165, 11);
+            buttonCheckWorkload.Location = new Point(3, 10);
             buttonCheckWorkload.Name = "buttonCheckWorkload";
             buttonCheckWorkload.Size = new Size(290, 39);
             buttonCheckWorkload.TabIndex = 13;
@@ -681,7 +668,6 @@
         private Label labelGroup;
         private ContextMenuStrip contextMenuStrip1;
         private ComboBox comboBoxGroups;
-        private Button buttonAdd;
         private Panel panel13;
         private Panel panel1;
         private Label labelCabinet;
