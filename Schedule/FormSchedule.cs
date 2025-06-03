@@ -448,7 +448,7 @@ namespace Schedule_project
                 MessageBox.Show
                 (
                     "Нагрузка не превышает 36 часов",
-                    "Предупреждение",
+                    "Оповещение",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
                 );
