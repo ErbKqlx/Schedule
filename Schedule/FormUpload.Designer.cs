@@ -38,6 +38,7 @@
             // buttonUpload
             // 
             buttonUpload.BackColor = Color.White;
+            buttonUpload.Cursor = Cursors.Hand;
             buttonUpload.FlatStyle = FlatStyle.Flat;
             buttonUpload.Location = new Point(55, 100);
             buttonUpload.Name = "buttonUpload";

@@ -30,10 +30,11 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSchedule));
-            labelGroup = new Label();
             contextMenuStrip1 = new ContextMenuStrip(components);
             comboBoxGroups = new ComboBox();
             panel13 = new Panel();
+            radioButton2 = new RadioButton();
+            radioButton1 = new RadioButton();
             buttonCheckWorkload = new Button();
             panel1 = new Panel();
             labelCabinet = new Label();
@@ -82,19 +83,6 @@
             panel2.SuspendLayout();
             SuspendLayout();
             // 
-            // labelGroup
-            // 
-            labelGroup.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            labelGroup.AutoSize = true;
-            labelGroup.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            labelGroup.Location = new Point(734, 10);
-            labelGroup.Margin = new Padding(5, 0, 5, 0);
-            labelGroup.Name = "labelGroup";
-            labelGroup.Size = new Size(89, 37);
-            labelGroup.TabIndex = 0;
-            labelGroup.Text = "group";
-            labelGroup.TextAlign = ContentAlignment.TopCenter;
-            // 
             // contextMenuStrip1
             // 
             contextMenuStrip1.ImageScalingSize = new Size(20, 20);
@@ -112,8 +100,9 @@
             // 
             // panel13
             // 
+            panel13.Controls.Add(radioButton2);
+            panel13.Controls.Add(radioButton1);
             panel13.Controls.Add(buttonCheckWorkload);
-            panel13.Controls.Add(labelGroup);
             panel13.Controls.Add(comboBoxGroups);
             panel13.Dock = DockStyle.Top;
             panel13.Location = new Point(10, 10);
@@ -121,6 +110,32 @@
             panel13.Padding = new Padding(5);
             panel13.Size = new Size(1412, 59);
             panel13.TabIndex = 13;
+            // 
+            // radioButton2
+            // 
+            radioButton2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            radioButton2.AutoSize = true;
+            radioButton2.Checked = true;
+            radioButton2.Location = new Point(803, 11);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(247, 29);
+            radioButton2.TabIndex = 15;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "Сортировка по алфавиту";
+            radioButton2.UseVisualStyleBackColor = true;
+            radioButton2.CheckedChanged += RadioButton_CheckedChanged;
+            // 
+            // radioButton1
+            // 
+            radioButton1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(1056, 11);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(213, 29);
+            radioButton1.TabIndex = 14;
+            radioButton1.Text = "Сортировка по курсу";
+            radioButton1.UseVisualStyleBackColor = true;
+            radioButton1.CheckedChanged += RadioButton_CheckedChanged;
             // 
             // buttonCheckWorkload
             // 
@@ -135,7 +150,7 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.WhiteSmoke;
+            panel1.BackColor = Color.FromArgb(192, 255, 192);
             panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(labelCabinet);
             panel1.Controls.Add(labelTeacher);
@@ -151,8 +166,8 @@
             // labelCabinet
             // 
             labelCabinet.AutoSize = true;
-            labelCabinet.Dock = DockStyle.Bottom;
-            labelCabinet.Location = new Point(0, 198);
+            labelCabinet.Dock = DockStyle.Top;
+            labelCabinet.Location = new Point(0, 220);
             labelCabinet.Margin = new Padding(5, 0, 5, 0);
             labelCabinet.Name = "labelCabinet";
             labelCabinet.RightToLeft = RightToLeft.No;
@@ -170,9 +185,9 @@
             labelTeacher.MaximumSize = new Size(193, 0);
             labelTeacher.Name = "labelTeacher";
             labelTeacher.Padding = new Padding(0, 0, 0, 10);
-            labelTeacher.Size = new Size(75, 35);
+            labelTeacher.Size = new Size(192, 185);
             labelTeacher.TabIndex = 3;
-            labelTeacher.Text = "teacher";
+            labelTeacher.Text = "teacherteacherteacherteacherteacherteacherteacherteacherteacherteacherteacherteacherteacherteacherteacherteacherteacherteacher";
             // 
             // labelDiscipline
             // 
@@ -664,8 +679,6 @@
         }
 
         #endregion
-
-        private Label labelGroup;
         private ContextMenuStrip contextMenuStrip1;
         private ComboBox comboBoxGroups;
         private Panel panel13;
@@ -707,5 +720,7 @@
         private Label fifth;
         private Label fourth;
         private Button buttonCheckWorkload;
+        private RadioButton radioButton2;
+        private RadioButton radioButton1;
     }
 }

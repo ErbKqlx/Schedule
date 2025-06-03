@@ -198,7 +198,7 @@ namespace Schedule_project
                     }
                 }
 
-                
+
             }
 
             _db.Schedules.Load();
@@ -261,11 +261,11 @@ namespace Schedule_project
             var panel = sender as Panel;
             _id = short.Parse(panel.Name.Split("_")[1]);
 
-            panel.BackColor = Color.AliceBlue;
+            panel.BackColor = Color.WhiteSmoke;
 
             if (panel != selectedPanel && selectedPanel != null)
             {
-                selectedPanel.BackColor = DefaultBackColor;
+                selectedPanel.BackColor = Color.FromArgb(192, 255, 192);
                 selectedPanel.ContextMenuStrip = null;
             }
             selectedPanel = panel;
@@ -285,7 +285,7 @@ namespace Schedule_project
             // 
             // labelCabinet
             // 
-            labelCabinet.Dock = DockStyle.Bottom;
+            labelCabinet.Dock = DockStyle.Top;
             labelCabinet.Location = new Point(0, 172);
             labelCabinet.Margin = new Padding(5, 0, 5, 0);
             labelCabinet.Name = "labelCabinet";
@@ -327,7 +327,7 @@ namespace Schedule_project
             // 
             // panel
             // 
-            panel.BackColor = Color.WhiteSmoke;
+            panel.BackColor = Color.FromArgb(192, 255, 192);
             panel.BorderStyle = BorderStyle.FixedSingle;
             panel.Controls.Add(labelCabinet);
             panel.Controls.Add(labelTeacher);
@@ -335,10 +335,12 @@ namespace Schedule_project
             //panel.Location = new Point(3, 3);
             panel.Name = $"panel_{id}";
             panel.RightToLeft = RightToLeft.No;
-            panel.Size = new Size(195, 199);
+            panel.Size = new Size(195, 260);
             panel.TabIndex = 0;
             panel.MouseClick += Panel_MouseClick;
+            //panel.Size = new Size(195, labelCabinet.Height + labelTeacher.Height + labelDiscipline.Height);
             panel.Dock = DockStyle.Fill;
+            panel.Cursor = Cursors.Hand;
 
             if (subgroup)
             {
@@ -352,6 +354,7 @@ namespace Schedule_project
                     tableLayoutPanel.RowStyles.Add(new RowStyle());
                     tableLayoutPanel.RowStyles.Add(new RowStyle());
                     tableLayoutPanel.Size = new Size(227, 450);
+                    tableLayoutPanel.AutoSize = true;
                     tableLayoutPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
                     tableLayoutPanelSchedule.Controls.Add(tableLayoutPanel, column, number);
                     tableLayoutPanel.Controls.Add(panel);
@@ -373,11 +376,16 @@ namespace Schedule_project
         private void ButtonCheckWorkload_Click(object sender, EventArgs e)
         {
             var hours = _db.Schedules.Local
-                .Select(v => new { v.Id, v.IdGroup, v.Date })
-                .Where(v => v.IdGroup == selectedGroupId)
+                .Select(v => new { v.Id, v.IdGroup, v.IdDisciplineTeacherNavigation.IdDisciplineNavigation.Name })
+                .Where(v => v.IdGroup == selectedGroupId && !Regex.IsMatch(v.Name, "п/гр"))
                 .Count() * 2;
 
-            if (hours > 36)
+            var hoursSubgroups = _db.Schedules.Local
+                .Select(v => new { v.Id, v.IdGroup, v.IdDisciplineTeacherNavigation.IdDisciplineNavigation.Name })
+                .Where(v => v.IdGroup == selectedGroupId && Regex.IsMatch(v.Name, "п/гр"))
+                .Count();
+
+            if (hours + hoursSubgroups > 36)
             {
                 MessageBox.Show
                 (
@@ -408,7 +416,7 @@ namespace Schedule_project
                     tableLayoutPanelSchedule.Controls.Remove(tableLayoutPanelSchedule.GetControlFromPosition(j, i));
                 }
             }
-            
+
 
             var item = sender as ComboBox;
             selectedGroupId = (short)item.SelectedValue;
@@ -457,6 +465,11 @@ namespace Schedule_project
                 }
                 column++;
             }
+        }
+
+        private void RadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
