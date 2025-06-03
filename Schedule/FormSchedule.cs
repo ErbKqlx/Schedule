@@ -24,7 +24,7 @@ namespace Schedule_project
         private short _id;
         private Panel? selectedPanel;
 
-        public string group = "ЭРО-24";
+        public short selectedGroupId;
         
         public FormSchedule(IApplication application, IWorkbook workbook)
         {
@@ -53,7 +53,7 @@ namespace Schedule_project
             short column = 1;
             foreach (var sheet in _worksheet)
             {
-                var range = sheet.Range["A3:G14"];
+                var range = sheet.Range["A3:C14"];
                 var date = sheet.Range["J1"].Text.Split(' ')[2];
                 for (var i = 1; i < range.Columns.Length; i+=2)
                 {
@@ -159,8 +159,8 @@ namespace Schedule_project
                         }
                         else
                         {
-                            building = null;
                             cabinet = null;
+                            building = null;
                         }
 
                         Schedule schedule = new Schedule
@@ -200,11 +200,26 @@ namespace Schedule_project
                     var idSchedule = schedule.Id;
                     var groupName = _db.Groups.FirstOrDefault(v => v.Id == schedule.IdGroup).Name;
                     var cabinet = _db.Cabinets.FirstOrDefault(v => v.Id == schedule.IdCabinet);
-                    var buildingCabinet = _db.Buildings.FirstOrDefault(v => v.Id == cabinet.IdBuilding).ShortName + " " + cabinet.Number;
+                    string? buildingCabinet = null;
+                    if (cabinet != null)
+                    {
+                        buildingCabinet = _db.Buildings.FirstOrDefault(v => v.Id == cabinet.IdBuilding).ShortName + " " + cabinet.Number;
+                    }
+                    //var buildingCabinet = _db.Buildings.FirstOrDefault(v => v.Id == cabinet.IdBuilding).ShortName + " " + cabinet.Number;
                     var number = schedule.Number;
                     var disciplinesTeacher = _db.DisciplinesTeachers.FirstOrDefault(v => v.Id == schedule.IdDisciplineTeacher);
                     var disciplineName = _db.Disciplines.FirstOrDefault(v => v.Id == disciplinesTeacher.IdDiscipline).CodeName;
-                    var teacherName = _db.Teachers.FirstOrDefault(v => v.Id == disciplinesTeacher.IdTeacher).FullName;
+                    var teacher = _db.Teachers.FirstOrDefault(v => v.Id == disciplinesTeacher.IdTeacher);
+                    string? teacherName = null;
+                    if (teacher != null)
+                    {
+                        teacherName = teacher.FullName;
+                    }
+                    bool subgroup = false;
+                    if (Regex.IsMatch(disciplineName, @"п/гр"))
+                    {
+                        subgroup = true;
+                    }
                     CreatePanel
                     (
                         idSchedule,
@@ -213,7 +228,8 @@ namespace Schedule_project
                         disciplineName,
                         teacherName,
                         number,
-                        column
+                        column,
+                        subgroup
                     );
                 }
                 column++;
@@ -247,6 +263,8 @@ namespace Schedule_project
             comboBoxGroups.DataSource = _db.Groups.Local.ToBindingList();
             comboBoxGroups.DisplayMember = "Name";
             comboBoxGroups.ValueMember = "Id";
+
+            selectedGroupId = (short)comboBoxGroups.SelectedValue;
 
         }
 
@@ -314,7 +332,7 @@ namespace Schedule_project
 
         }
 
-        private void CreatePanel(short id, string groupName, string buildingCabinet, string disciplineName, string teacherName, short number, short column)
+        private void CreatePanel(short id, string groupName, string buildingCabinet, string disciplineName, string teacherName, short number, short column, bool subgroup)
         {
             var labelCabinet = new Label();
             var labelDiscipline = new Label();
@@ -380,21 +398,61 @@ namespace Schedule_project
             panel.TabIndex = 0;
             panel.MouseClick += Panel_MouseClick;
 
-            tableLayoutPanelSchedule.Controls.Add(panel, column, number);
+            var tableLayoutPanel = new TableLayoutPanel();
+            //tableLayoutPanel.Dock = DockStyle.Fill;
+            tableLayoutPanel.ColumnCount = 1;
+            tableLayoutPanel.ColumnStyles.Add(new ColumnStyle());
+            tableLayoutPanel.RowCount = 2;
+            tableLayoutPanel.RowStyles.Add(new RowStyle());
+            tableLayoutPanel.RowStyles.Add(new RowStyle());
+            tableLayoutPanel.Size = new Size(227, 450);
+            tableLayoutPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+
+            if (subgroup)
+            {
+                if (tableLayoutPanelSchedule.GetControlFromPosition(column, number) == null)
+                {
+                    tableLayoutPanelSchedule.Controls.Add(tableLayoutPanel, column, number);
+                }
+                tableLayoutPanel.Controls.Add(panel);
+            }
+            else
+            {
+                tableLayoutPanelSchedule.Controls.Add(panel, column, number);
+            }
+            
             //panel.ContextMenuStrip = contextMenuStrip1;
         }
 
         private void ButtonCheckWorkload_Click(object sender, EventArgs e)
         {
-            //var groups = _db.Groups.Local.Select(v => v.Id);
+            selectedGroupId = 47;
 
-            //foreach (var group in groups)
-            //{
-            //    var schedules = _db.Schedules.Local
-            //        .Select(v => new { v.Id, v.IdGroup, v.Date })
-            //        .Where(v => v.IdGroup == group && v.Date.)
-            //        .Count();
-            //}
+            var hours = _db.Schedules.Local
+                .Select(v => new { v.Id, v.IdGroup, v.Date })
+                .Where(v => v.IdGroup == selectedGroupId)
+                .Count() * 2;
+
+            if (hours > 36)
+            {
+                MessageBox.Show
+                (
+                    "Нагрузка больше 36 часов",
+                    "Предупреждение",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+            }
+            else
+            {
+                MessageBox.Show
+                (
+                    "Нагрузка не превышает 36 часов",
+                    "Предупреждение",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+            }
         }
     }
 }

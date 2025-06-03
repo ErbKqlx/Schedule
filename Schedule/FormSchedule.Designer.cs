@@ -215,6 +215,7 @@
             // tableLayoutPanelSchedule
             // 
             tableLayoutPanelSchedule.AutoScroll = true;
+            tableLayoutPanelSchedule.AutoSize = true;
             tableLayoutPanelSchedule.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             tableLayoutPanelSchedule.ColumnCount = 7;
             tableLayoutPanelSchedule.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 25F));
@@ -672,6 +673,7 @@
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
