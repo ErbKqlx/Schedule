@@ -138,7 +138,7 @@
             textBoxSearch.Location = new Point(978, 11);
             textBoxSearch.Name = "textBoxSearch";
             textBoxSearch.Size = new Size(273, 33);
-            textBoxSearch.TabIndex = 14;
+            textBoxSearch.TabIndex = 0;
             textBoxSearch.TextChanged += TextBoxSearch_TextChanged;
             // 
             // buttonCheckWorkload

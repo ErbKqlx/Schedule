@@ -390,7 +390,7 @@ namespace Schedule_project
             {
                 MessageBox.Show
                 (
-                    "Нагрузка больше 36 часов",
+                    $"Нагрузка больше 36 часов ({hours + hoursSubgroups})",
                     "Предупреждение",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning
@@ -400,7 +400,7 @@ namespace Schedule_project
             {
                 MessageBox.Show
                 (
-                    "Нагрузка не превышает 36 часов",
+                    $"Нагрузка не превышает 36 часов ({hours + hoursSubgroups})",
                     "Оповещение",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information
@@ -470,7 +470,7 @@ namespace Schedule_project
 
         private void TextBoxSearch_TextChanged(object sender, EventArgs e)
         {
-            var searchedText = textBoxSearch.Text;
+            var searchedText = textBoxSearch.Text.ToLower();
 
             var schedule = _db.Schedules.Local.Where(v => v.IdGroup == selectedGroupId).ToList();
 
@@ -478,31 +478,125 @@ namespace Schedule_project
 
             foreach (var pair in schedule)
             {
-                var cabinet = pair.IdCabinetNavigation.Number;
-                var discipline = pair.IdDisciplineTeacherNavigation.IdDisciplineNavigation.CodeName;
-                var teacher = pair.IdDisciplineTeacherNavigation.IdTeacherNavigation.FullName;
-                var group = pair.IdGroupNavigation.Name;
-
-                if (cabinet.Contains(searchedText)
-                    || discipline.Contains(searchedText)
-                    || teacher.Contains(searchedText)
-                    //&& !number.Contains(searchedText)
-                    || group.Contains(searchedText))
+                var cabinet = pair.IdCabinetNavigation?.Number.ToLower();
+                var discipline = pair.IdDisciplineTeacherNavigation.IdDisciplineNavigation.CodeName.ToLower();
+                var teacher = pair.IdDisciplineTeacherNavigation.IdTeacherNavigation?.FullName.ToLower();
+                if (cabinet != null && teacher != null)
                 {
+                    if (cabinet.Contains(searchedText)
+                        || discipline.Contains(searchedText)
+                        || teacher.Contains(searchedText))
+                    {
 
-                    tableLayoutPanelSchedule.Controls.Find($"panel_{pair.Id}", true)[0].Visible = true;
+                        tableLayoutPanelSchedule.Controls.Find($"panel_{pair.Id}", true)[0].Visible = true;
+                    }
+                    else
+                    {
+                        tableLayoutPanelSchedule.Controls.Find($"panel_{pair.Id}", true)[0].Visible = false;
+                    }
+                }
+                else if (cabinet == null)
+                {
+                    if (discipline.Contains(searchedText)
+                        || teacher.Contains(searchedText))
+                    {
+
+                        tableLayoutPanelSchedule.Controls.Find($"panel_{pair.Id}", true)[0].Visible = true;
+                    }
+                    else
+                    {
+                        tableLayoutPanelSchedule.Controls.Find($"panel_{pair.Id}", true)[0].Visible = false;
+                    }
+                }
+                else if (teacher == null)
+                {
+                    if (cabinet.Contains(searchedText)
+                    || discipline.Contains(searchedText))
+                    {
+
+                        tableLayoutPanelSchedule.Controls.Find($"panel_{pair.Id}", true)[0].Visible = true;
+                    }
+                    else
+                    {
+                        tableLayoutPanelSchedule.Controls.Find($"panel_{pair.Id}", true)[0].Visible = false;
+                    }
                 }
                 else
                 {
-                    tableLayoutPanelSchedule.Controls.Find($"panel_{pair.Id}", true)[0].Visible = false;
+                    if (discipline.Contains(searchedText))
+                    {
+
+                        tableLayoutPanelSchedule.Controls.Find($"panel_{pair.Id}", true)[0].Visible = true;
+                    }
+                    else
+                    {
+                        tableLayoutPanelSchedule.Controls.Find($"panel_{pair.Id}", true)[0].Visible = false;
+                    }
                 }
+                
             }
 
         }
 
         private void ButtonCheckSubgroups_Click(object sender, EventArgs e)
         {
+            var dictionary = new Dictionary<string, string>();
+            var dates = _db.Schedules.Local.Select(v => v.Date).Distinct();
 
+            foreach (var date in dates)
+            {
+                for (short i = 1; i < 7; i++)
+                {
+                    var firstSubgroupPair = _db.Schedules.Local.FirstOrDefault(v => v.IdGroup == selectedGroupId
+                        && Regex.IsMatch(v.IdDisciplineTeacherNavigation.IdDisciplineNavigation.Name, @"1 п/гр")
+                        && v.Number == i
+                        && v.Date == date);
+
+                    var secondSubgroupPair = _db.Schedules.Local.FirstOrDefault(v => v.IdGroup == selectedGroupId
+                        && Regex.IsMatch(v.IdDisciplineTeacherNavigation.IdDisciplineNavigation.Name, @"2 п/гр")
+                        && v.Number == i
+                        && v.Date == date);
+
+                    if (firstSubgroupPair?.IdCabinet == secondSubgroupPair?.IdCabinet && firstSubgroupPair != null && secondSubgroupPair != null)
+                    {
+                        dictionary.Add
+                        (
+                            firstSubgroupPair.IdDisciplineTeacherNavigation.IdDisciplineNavigation.Name,
+                            $"{firstSubgroupPair.IdCabinetNavigation.IdBuildingNavigation.Name} {firstSubgroupPair.IdCabinetNavigation.Number}"
+                        );
+                        dictionary.Add
+                        (
+                            secondSubgroupPair.IdDisciplineTeacherNavigation.IdDisciplineNavigation.Name, 
+                            $"{secondSubgroupPair.IdCabinetNavigation.IdBuildingNavigation.Name} {secondSubgroupPair.IdCabinetNavigation.Number}"
+                        );
+                    }
+                }
+            }
+
+            if (dictionary.Count == 0)
+            {
+                MessageBox.Show
+                (
+                    "Конфликты не найдены",
+                    "Оповещение",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
+            }
+            else
+            {
+                MessageBox.Show
+                (
+                    "Найдены конфликты",
+                    "Предупреждение",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+
+                var formErrors = new FormErrors(dictionary);
+                formErrors.Show();
+            }
+            
         }
     }
 }
