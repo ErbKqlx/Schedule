@@ -33,8 +33,8 @@
             contextMenuStrip1 = new ContextMenuStrip(components);
             comboBoxGroups = new ComboBox();
             panel13 = new Panel();
-            radioButton2 = new RadioButton();
-            radioButton1 = new RadioButton();
+            label16 = new Label();
+            textBoxSearch = new TextBox();
             buttonCheckWorkload = new Button();
             panel1 = new Panel();
             labelCabinet = new Label();
@@ -100,8 +100,8 @@
             // 
             // panel13
             // 
-            panel13.Controls.Add(radioButton2);
-            panel13.Controls.Add(radioButton1);
+            panel13.Controls.Add(label16);
+            panel13.Controls.Add(textBoxSearch);
             panel13.Controls.Add(buttonCheckWorkload);
             panel13.Controls.Add(comboBoxGroups);
             panel13.Dock = DockStyle.Top;
@@ -111,31 +111,22 @@
             panel13.Size = new Size(1412, 59);
             panel13.TabIndex = 13;
             // 
-            // radioButton2
+            // label16
             // 
-            radioButton2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            radioButton2.AutoSize = true;
-            radioButton2.Checked = true;
-            radioButton2.Location = new Point(803, 11);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(247, 29);
-            radioButton2.TabIndex = 15;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "Сортировка по алфавиту";
-            radioButton2.UseVisualStyleBackColor = true;
-            radioButton2.CheckedChanged += RadioButton_CheckedChanged;
+            label16.AutoSize = true;
+            label16.Location = new Point(515, 18);
+            label16.Name = "label16";
+            label16.Size = new Size(70, 25);
+            label16.TabIndex = 15;
+            label16.Text = "Поиск:";
             // 
-            // radioButton1
+            // textBoxSearch
             // 
-            radioButton1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(1056, 11);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(213, 29);
-            radioButton1.TabIndex = 14;
-            radioButton1.Text = "Сортировка по курсу";
-            radioButton1.UseVisualStyleBackColor = true;
-            radioButton1.CheckedChanged += RadioButton_CheckedChanged;
+            textBoxSearch.Location = new Point(591, 14);
+            textBoxSearch.Name = "textBoxSearch";
+            textBoxSearch.Size = new Size(273, 33);
+            textBoxSearch.TabIndex = 14;
+            textBoxSearch.TextChanged += TextBoxSearch_TextChanged;
             // 
             // buttonCheckWorkload
             // 
@@ -720,7 +711,7 @@
         private Label fifth;
         private Label fourth;
         private Button buttonCheckWorkload;
-        private RadioButton radioButton2;
-        private RadioButton radioButton1;
+        private Label label16;
+        private TextBox textBoxSearch;
     }
 }
