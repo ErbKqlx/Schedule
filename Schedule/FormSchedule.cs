@@ -53,7 +53,8 @@ namespace Schedule_project
 
             foreach (var sheet in _worksheet)
             {
-                var range = sheet.Range[$"A3:AK14"];
+                //A3:AK14
+                var range = sheet.Range[$"A3:C14"];
                 var date = sheet.Range["J1"].Text.Split(' ')[2];
                 for (var i = 1; i < range.Columns.Length; i += 2)
                 {
@@ -222,7 +223,7 @@ namespace Schedule_project
             comboBoxGroups.DisplayMember = "Name";
             comboBoxGroups.ValueMember = "Id";
             comboBoxGroups.SelectedIndexChanged += ComboBoxGroups_SelectedIndexChanged;
-            comboBoxGroups.SelectedText = "ЭРО-24";
+            comboBoxGroups.SelectedIndex = 43;
         }
 
         private void DeleteMenuItem_Click(object? sender, EventArgs e)
@@ -470,31 +471,30 @@ namespace Schedule_project
         private void TextBoxSearch_TextChanged(object sender, EventArgs e)
         {
             var searchedText = textBoxSearch.Text;
-            //if (searchedText == "")
-            //{
-            //    foreach (var control in tableLayoutPanelSchedule.Controls.)
-            //    {
-                    
-            //    }
-            //}
 
-            var schedule = _db.Schedules.Local.ToList();
+            var schedule = _db.Schedules.Local.Where(v => v.IdGroup == selectedGroupId).ToList();
+
+            
 
             foreach (var pair in schedule)
             {
-                var cabinet = _db.Schedules.Local.FirstOrDefault(v => v.IdCabinet == pair.IdCabinet).ToString().ToLower();
-                var discipline = _db.Schedules.Local.FirstOrDefault(v => v.IdDisciplineTeacherNavigation.IdDiscipline == pair.IdDisciplineTeacherNavigation.IdDiscipline).ToString().ToLower();
-                var teacher = _db.Schedules.Local.FirstOrDefault(v => v.IdDisciplineTeacherNavigation.IdTeacher == pair.IdDisciplineTeacherNavigation.IdTeacher).ToString().ToLower();
-                var number = _db.Schedules.Local.FirstOrDefault(v => v.Number == pair.Number).ToString();
-                var group = _db.Schedules.Local.FirstOrDefault(v => v.IdGroup == pair.IdGroup).ToString().ToLower();
+                var cabinet = pair.IdCabinetNavigation.Number;
+                var discipline = pair.IdDisciplineTeacherNavigation.IdDisciplineNavigation.CodeName;
+                var teacher = pair.IdDisciplineTeacherNavigation.IdTeacherNavigation.FullName;
+                var group = pair.IdGroupNavigation.Name;
 
-                if (!cabinet.Contains(searchedText) 
-                    && discipline.Contains(searchedText)
-                    && teacher.Contains(searchedText)
-                    && number.Contains(searchedText)
-                    && group.Contains(searchedText))
+                if (cabinet.Contains(searchedText) 
+                    || discipline.Contains(searchedText)
+                    || teacher.Contains(searchedText)
+                    //&& !number.Contains(searchedText)
+                    || group.Contains(searchedText))
                 {
-                    tableLayoutPanelSchedule.Controls.Find($"panel_{pair.Id}", false)[0].Visible = false;
+
+                    tableLayoutPanelSchedule.Controls.Find($"panel_{pair.Id}", true)[0].Visible = true;
+                }
+                else
+                {
+                    tableLayoutPanelSchedule.Controls.Find($"panel_{pair.Id}", true)[0].Visible = false;
                 }
             }
             
