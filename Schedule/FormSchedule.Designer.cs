@@ -126,6 +126,7 @@
             // 
             // label16
             // 
+            label16.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label16.AutoSize = true;
             label16.Location = new Point(902, 15);
             label16.Name = "label16";
@@ -135,6 +136,7 @@
             // 
             // textBoxSearch
             // 
+            textBoxSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             textBoxSearch.Location = new Point(978, 11);
             textBoxSearch.Name = "textBoxSearch";
             textBoxSearch.Size = new Size(273, 33);
