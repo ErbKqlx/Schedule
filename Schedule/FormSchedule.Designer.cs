@@ -33,6 +33,7 @@
             contextMenuStrip1 = new ContextMenuStrip(components);
             comboBoxGroups = new ComboBox();
             panel13 = new Panel();
+            buttonCheckSubgroups = new Button();
             label16 = new Label();
             textBoxSearch = new TextBox();
             buttonCheckWorkload = new Button();
@@ -100,6 +101,7 @@
             // 
             // panel13
             // 
+            panel13.Controls.Add(buttonCheckSubgroups);
             panel13.Controls.Add(label16);
             panel13.Controls.Add(textBoxSearch);
             panel13.Controls.Add(buttonCheckWorkload);
@@ -111,10 +113,21 @@
             panel13.Size = new Size(1412, 59);
             panel13.TabIndex = 13;
             // 
+            // buttonCheckSubgroups
+            // 
+            buttonCheckSubgroups.BackColor = Color.White;
+            buttonCheckSubgroups.Location = new Point(301, 10);
+            buttonCheckSubgroups.Name = "buttonCheckSubgroups";
+            buttonCheckSubgroups.Size = new Size(338, 39);
+            buttonCheckSubgroups.TabIndex = 16;
+            buttonCheckSubgroups.Text = "Проверить на совпадение подгрупп";
+            buttonCheckSubgroups.UseVisualStyleBackColor = false;
+            buttonCheckSubgroups.Click += ButtonCheckSubgroups_Click;
+            // 
             // label16
             // 
             label16.AutoSize = true;
-            label16.Location = new Point(515, 18);
+            label16.Location = new Point(902, 15);
             label16.Name = "label16";
             label16.Size = new Size(70, 25);
             label16.TabIndex = 15;
@@ -122,7 +135,7 @@
             // 
             // textBoxSearch
             // 
-            textBoxSearch.Location = new Point(591, 14);
+            textBoxSearch.Location = new Point(978, 11);
             textBoxSearch.Name = "textBoxSearch";
             textBoxSearch.Size = new Size(273, 33);
             textBoxSearch.TabIndex = 14;
@@ -713,5 +726,6 @@
         private Button buttonCheckWorkload;
         private Label label16;
         private TextBox textBoxSearch;
+        private Button buttonCheckSubgroups;
     }
 }

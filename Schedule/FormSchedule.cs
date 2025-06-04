@@ -54,7 +54,7 @@ namespace Schedule_project
             foreach (var sheet in _worksheet)
             {
                 //A3:AK14
-                var range = sheet.Range[$"A3:C14"];
+                var range = sheet.Range[$"A3:AK14"];
                 var date = sheet.Range["J1"].Text.Split(' ')[2];
                 for (var i = 1; i < range.Columns.Length; i += 2)
                 {
@@ -474,7 +474,7 @@ namespace Schedule_project
 
             var schedule = _db.Schedules.Local.Where(v => v.IdGroup == selectedGroupId).ToList();
 
-            
+
 
             foreach (var pair in schedule)
             {
@@ -483,7 +483,7 @@ namespace Schedule_project
                 var teacher = pair.IdDisciplineTeacherNavigation.IdTeacherNavigation.FullName;
                 var group = pair.IdGroupNavigation.Name;
 
-                if (cabinet.Contains(searchedText) 
+                if (cabinet.Contains(searchedText)
                     || discipline.Contains(searchedText)
                     || teacher.Contains(searchedText)
                     //&& !number.Contains(searchedText)
@@ -497,7 +497,12 @@ namespace Schedule_project
                     tableLayoutPanelSchedule.Controls.Find($"panel_{pair.Id}", true)[0].Visible = false;
                 }
             }
-            
+
+        }
+
+        private void ButtonCheckSubgroups_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
