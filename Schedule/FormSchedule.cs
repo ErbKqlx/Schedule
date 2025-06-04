@@ -1,17 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Schedule_project.Models;
 using Syncfusion.XlsIO;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Schedule_project
 {
